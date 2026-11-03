@@ -1,11 +1,15 @@
 name: A股收盘简报推送
 
 on:
-  workflow_dispatch: {} # 由外部 cron（cron-job.org 任务 ashare-briefing-18pm，每天北京时间 18:00）调用 API 触发；也可在 Actions 页面手动触发
+  schedule:
+    # 兜底触发：UTC 10:00 = 北京时间 18:00。主触发为外部 cron-job.org（准点）。
+    # 若当天已成功推送（Actions Cache 当日标记命中），本运行会自动跳过，避免双重推送。
+    - cron: "0 10 * * *"
+  workflow_dispatch: {} # 由 cron-job.org 任务 ashare-briefing-18pm 每天 18:00 调用触发；也可在 Actions 页面手动触发
 
 concurrency:
   group: ashare-briefing
-  cancel-in-progress: false
+  cancel-in-progress: false # 两个触发源撞车时排队串行，先跑的推送，后跑的自动跳过
 
 jobs:
   run:
@@ -14,15 +18,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: 计算北京时间日期
+        id: bjdate
+        run: echo "today=$(TZ=Asia/Shanghai date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: 查今日已推送标记（命中则跳过，防双重推送）
+        id: sent
+        uses: actions/cache@v4
+        with:
+          path: output/sent_marker
+          key: briefing-sent-${{ steps.bjdate.outputs.today }}
+
       - uses: actions/setup-python@v5
+        if: steps.sent.outputs.cache-hit != 'true'
         with:
           python-version: "3.11"
           cache: pip
 
       - name: 安装依赖
+        if: steps.sent.outputs.cache-hit != 'true'
         run: pip install -r requirements.txt
 
       - name: 采集数据并生成推送简报
+        if: steps.sent.outputs.cache-hit != 'true'
         env:
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}

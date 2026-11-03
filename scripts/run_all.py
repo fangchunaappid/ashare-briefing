@@ -7,6 +7,7 @@
 import json
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +38,11 @@ def main():
     print(json.dumps(res, ensure_ascii=False, indent=2))
     if not res.get("ok"):
         return 1
+    # 写"今日已推送"标记：workflow 会将其存入 Actions Cache（key 含北京日期），
+    # 当天其他触发源（GitHub schedule 兜底 / cron-job）再运行时据此跳过，防止双重推送。
+    os.makedirs("output", exist_ok=True)
+    with open(os.path.join("output", "sent_marker"), "w") as f:
+        f.write(time.strftime("%Y-%m-%d %H:%M:%S %z"))
     print("推送成功：%d 条消息全部发送成功。" % res.get("total_chunks", 1))
     return 0
 
