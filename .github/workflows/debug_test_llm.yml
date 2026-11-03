@@ -1,7 +1,8 @@
 name: debug_llm_timing
 on:
   workflow_dispatch: {}
-permissions: {}
+permissions:
+  contents: read
 jobs:
   t:
     runs-on: ubuntu-latest
