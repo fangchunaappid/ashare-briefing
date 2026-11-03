@@ -58,11 +58,13 @@ def llm_chat(user_text, retries=2):
             {"role": "user", "content": user_text},
         ],
         "temperature": 0.2,
+        # GLM-5 系列默认开深度思考，长 prompt 下会超出推送时限；简报为格式化任务，关闭思考直出。
+        "thinking": {"type": "disabled"},
     }
     last_err = None
     for _ in range(retries + 1):
         try:
-            r = requests.post(url, json=payload, timeout=180,
+            r = requests.post(url, json=payload, timeout=300,
                               headers={"Authorization": "Bearer " + key,
                                        "Content-Type": "application/json"})
             r.raise_for_status()
