@@ -1,0 +1,34 @@
+name: A股收盘简报推送
+
+on:
+  schedule:
+    # UTC 07:15 = 北京时间 15:15（A股收盘后）。GitHub 定时任务可能有几分钟到几十分钟延迟。
+    - cron: "15 7 * * 1-5"
+  workflow_dispatch: {} # 支持在 Actions 页面手动触发
+
+concurrency:
+  group: ashare-briefing
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 采集数据并生成推送简报
+        env:
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python scripts/run_all.py
