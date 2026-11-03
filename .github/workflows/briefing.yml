@@ -1,11 +1,7 @@
 name: A股收盘简报推送
 
 on:
-  schedule:
-    # UTC 10:00 = 北京时间 18:00（每日触发；非交易日/休市时脚本自动静默结束）。
-    # GitHub 定时任务可能有几分钟到几十分钟延迟，属正常现象。
-    - cron: "0 10 * * *"
-  workflow_dispatch: {} # 支持在 Actions 页面手动触发
+  workflow_dispatch: {} # 由外部 cron（cron-job.org 任务 ashare-briefing-18pm，每天北京时间 18:00）调用 API 触发；也可在 Actions 页面手动触发
 
 concurrency:
   group: ashare-briefing
