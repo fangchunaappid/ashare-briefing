@@ -29,6 +29,17 @@ jobs:
           path: output/sent_marker
           key: briefing-sent-${{ steps.bjdate.outputs.today }}
 
+      # ETF 份额快照：跨日恢复最近一次快照，供 fetch_data 计算份额变化（净申购/净赎回）
+      - name: 恢复 ETF 份额快照
+        if: steps.sent.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: output/etf_shares.json
+          key: etf-shares-${{ steps.bjdate.outputs.today }}-${{ github.run_id }}
+          restore-keys: |
+            etf-shares-${{ steps.bjdate.outputs.today }}-
+            etf-shares-
+
       - uses: actions/setup-python@v5
         if: steps.sent.outputs.cache-hit != 'true'
         with:
@@ -47,3 +58,10 @@ jobs:
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
         run: python scripts/run_all.py
+
+      - name: 保存今日 ETF 份额快照（供次日计算份额变化）
+        if: ${{ steps.sent.outputs.cache-hit != 'true' && hashFiles('output/etf_shares.json') != '' }}
+        uses: actions/cache/save@v4
+        with:
+          path: output/etf_shares.json
+          key: etf-shares-${{ steps.bjdate.outputs.today }}-${{ github.run_id }}
