@@ -143,6 +143,7 @@ def em_boards(board_type, po, pz=8):
         "name": d.get("f14"),
         "change_pct": to_num(d.get("f3")),
         "main_inflow_yuan": to_num(d.get("f62")),
+        "main_inflow_yi": round(to_num(d.get("f62")) / 1e8, 1) if to_num(d.get("f62")) else None,
         "leader_stock": d.get("f128"),
         "leader_change_pct": to_num(d.get("f136")),
     } for d in _em_diff(j)]
@@ -169,6 +170,7 @@ def em_market_overview():
     return [{
         "name": d.get("f14"),
         "main_inflow_yuan": to_num(d.get("f62")),
+        "main_inflow_yi": round(to_num(d.get("f62")) / 1e8, 1) if to_num(d.get("f62")) else None,
         "advancers": to_num(d.get("f104")),
         "decliners": to_num(d.get("f105")),
         "flat": to_num(d.get("f106")),
@@ -227,6 +229,18 @@ def sina_lme_aluminum():
     pct = round((price / prev - 1) * 100, 2) if price and prev else None
     return {"name": "LME铝(3个月)", "price": price, "prev_close": prev, "change_pct": pct}
 
+
+def em_lme_aluminum():
+    """东财外盘期货：LME 综合铝03（109.LALT）。新浪 hf_ 外盘接口失效后的备用源。"""
+    j = _em_json("/api/qt/stock/get?secid=109.LALT&fltt=2&invt=2"
+                 "&fields=f43,f57,f58,f60,f169,f170")
+    d = j.get("data") or {}
+    price, prev = to_num(d.get("f43")), to_num(d.get("f60"))
+    if not price:
+        return None
+    return {"name": d.get("f58") or "LME铝(3个月)", "price": price,
+            "prev_close": prev, "change": to_num(d.get("f169")),
+            "change_pct": to_num(d.get("f170")), "source": "eastmoney"}
 
 def sina_shfe_aluminum_fallback():
     raw = http_get("https://hq.sinajs.cn/list=nf_AL0",
@@ -423,6 +437,11 @@ def collect():
             if _lme:
                 break
             time.sleep(2)
+        if not _lme:  # 新浪外盘接口已失效/被限：改走东财外盘期货
+            try:
+                _lme = em_lme_aluminum()
+            except Exception:
+                _lme = None
         data["LME铝"] = _lme
         status("LME铝", _lme is not None)
     except Exception as e:
