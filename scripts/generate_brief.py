@@ -5,7 +5,7 @@
 环境变量：
 - LLM_API_KEY  必填
 - LLM_BASE_URL 可选，默认 https://open.bigmodel.cn/api/paas/v4 （智谱GLM）
-- LLM_MODEL    可选，默认 glm-4-flash
+- LLM_MODEL    可选，默认 glm-5.3-flash
 
 LLM 调用失败时退化为纯数据模板简报，保证推送链路不中断。
 """
@@ -49,7 +49,7 @@ def llm_chat(user_text, retries=2):
     if not key:
         raise RuntimeError("未配置 LLM_API_KEY")
     base = (os.environ.get("LLM_BASE_URL") or "https://open.bigmodel.cn/api/paas/v4").rstrip("/")
-    model = os.environ.get("LLM_MODEL") or "glm-4-flash"
+    model = os.environ.get("LLM_MODEL") or "glm-5.3-flash"
     url = base + ("/chat/completions" if "/chat/completions" not in base else "")
     payload = {
         "model": model,
