@@ -11,6 +11,9 @@ concurrency:
   group: ashare-briefing
   cancel-in-progress: false # 两个触发源撞车时排队串行，先跑的推送，后跑的自动跳过
 
+permissions:
+  contents: write # 每日数据归档到 data 分支需要
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -65,3 +68,19 @@ jobs:
         with:
           path: output/etf_shares.json
           key: etf-shares-${{ steps.bjdate.outputs.today }}-${{ github.run_id }}
+
+      # 数据沉淀：当日 data.json 归档到 data 分支（文件按日期命名，可回溯趋势）
+      - name: 归档当日数据到 data 分支
+        if: ${{ steps.sent.outputs.cache-hit != 'true' && hashFiles('data.json') != '' }}
+        env:
+          TODAY: ${{ steps.bjdate.outputs.today }}
+        run: |
+          git config user.name "ashare-archive-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch origin data 2>/dev/null && git checkout -B data origin/data || git checkout --orphan data
+          git rm -r --cached . -q 2>/dev/null || true
+          mkdir -p data
+          cp data.json "data/${TODAY}.json"
+          git add data
+          git commit -m "data: ${TODAY} 收盘数据归档" 2>/dev/null || echo "无变更"
+          git push origin data
