@@ -13,6 +13,7 @@
 import json
 import os
 import re
+import time
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 from xml.etree import ElementTree as ET
@@ -79,6 +80,7 @@ def tencent_quotes(codes):
             "high": to_num(f[33]),
             "low": to_num(f[34]),
             "amount_yuan": amount,
+            "amount_yi": round(amount / 1e8, 1) if amount else None,
             "volume_ratio": to_num(f[49]) if len(f) > 49 else None,
             "quote_time": f[30] if len(f) > 30 else "",
         }
@@ -112,13 +114,17 @@ def daily_kline(code, n=6):
 
 # ---------------------------------------------------------------- 东方财富
 def _em_json(path):
-    """push2主域名失败时自动尝试push2delay备用域名。"""
+    """push2/push2delay 双域名互备 × 3 轮重试（东财偶发整站 502）。"""
+    import time as _t
     last = None
-    for host in ("push2.eastmoney.com", "push2delay.eastmoney.com"):
-        try:
-            return json.loads(http_get("https://%s%s" % (host, path)))
-        except Exception as e:  # noqa: BLE001
-            last = e
+    for round_ in range(3):
+        for host in ("push2.eastmoney.com", "push2delay.eastmoney.com"):
+            try:
+                return json.loads(http_get("https://%s%s" % (host, path)))
+            except Exception as e:  # noqa: BLE001
+                last = e
+        if round_ < 2:
+            _t.sleep(2 * (round_ + 1))
     raise last
 
 
@@ -153,6 +159,7 @@ def em_stock_rank(sort_field, pz=10):
         "change_pct": to_num(d.get("f3")),
         "volume": to_num(d.get("f5")),
         "amount_yuan": to_num(d.get("f6")),
+        "amount_yi": round(to_num(d.get("f6")) / 1e8, 1) if to_num(d.get("f6")) else None,
     } for d in _em_diff(j)]
 
 
@@ -340,7 +347,10 @@ def collect():
         sh, sz, cyb, szc = q.get("sh000001"), q.get("sz399001"), q.get("sz399006"), q.get("sz399106")
         data["indices"] = {"上证指数": sh, "深证成指": sz, "创业板指": cyb}
         if sh and sz and sh.get("amount_yuan") and sz.get("amount_yuan"):
-            data["两市成交额_元"] = sh["amount_yuan"] + sz["amount_yuan"]
+            _total = sh["amount_yuan"] + sz["amount_yuan"]
+            data["两市成交额_元"] = _total
+            data["两市成交额_亿"] = round(_total / 1e8)
+            data["两市成交额_万亿"] = round(_total / 1e12, 2)
         status("指数行情", True)
     except Exception as e:
         status("指数行情", False, str(e)[:80])
@@ -404,8 +414,17 @@ def collect():
     data["沪铝主力"] = fut
     status("沪铝期价", fut is not None)
     try:
-        data["LME铝"] = sina_lme_aluminum()
-        status("LME铝", data["LME铝"] is not None)
+        _lme = None
+        for _attempt in range(2):
+            try:
+                _lme = sina_lme_aluminum()
+            except Exception:
+                _lme = None
+            if _lme:
+                break
+            time.sleep(2)
+        data["LME铝"] = _lme
+        status("LME铝", _lme is not None)
     except Exception as e:
         status("LME铝", False, str(e)[:80])
     try:
