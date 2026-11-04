@@ -1,0 +1,1454 @@
+{
+ "date": "2026-11-04",
+ "fetch_time": "2026-11-04T16:40:29.154787+08:00",
+ "status": {
+  "交易日校验": "ok",
+  "指数行情(akshare)": "ok",
+  "指数行情": "ok",
+  "板块数据": "ok",
+  "个股资金": "ok",
+  "宽基ETF": "ok",
+  "沪铝期价": "ok",
+  "LME铝": "ok",
+  "铝个股": "ok",
+  "库存(akshare)": "ok",
+  "新闻-A股收盘": "ok",
+  "新闻-国家队": "ok",
+  "新闻-电解铝库存": "ok",
+  "新闻-氧化铝": "ok",
+  "新闻-电解铝产能": "ok",
+  "新闻-铝板块": "ok",
+  "新浪7x24": "ok",
+  "新浪滚动": "ok",
+  "公告": "ok",
+  "公告-汇金(巨潮)": "ok",
+  "公告-份额变动(巨潮)": "失败",
+  "ETF份额快照": "ok"
+ },
+ "index_kline_tail": [
+  [
+   "2026-10-27",
+   417789532.0
+  ],
+  [
+   "2026-10-28",
+   433622829.0
+  ],
+  [
+   "2026-10-29",
+   443564144.0
+  ],
+  [
+   "2026-10-30",
+   497973940.0
+  ],
+  [
+   "2026-11-02",
+   565372836.0
+  ],
+  [
+   "2026-11-03",
+   536848407.0
+  ],
+  [
+   "2026-11-04",
+   599394361.0
+  ]
+ ],
+ "trading_day": true,
+ "indices": {
+  "上证指数": {
+   "name": "上证指数",
+   "price": 3686.17,
+   "change": 78.07,
+   "change_pct": 2.16,
+   "amount_yuan": 953265155867.1
+  },
+  "深证成指": {
+   "name": "深证成指",
+   "price": 11335.69,
+   "change": 458.7,
+   "change_pct": 4.22,
+   "amount_yuan": 1084429058169.6685
+  },
+  "创业板指": {
+   "name": "创业板指",
+   "price": 2544.73,
+   "change": 153.08,
+   "change_pct": 6.4,
+   "amount_yuan": 549329528581.74
+  }
+ },
+ "两市成交额_元": 2037694214036.7686,
+ "两市成交额_亿": 20377,
+ "两市成交额_万亿": 2.04,
+ "行业板块领涨": [
+  {
+   "name": "半导体设备",
+   "change_pct": 15.22,
+   "main_inflow_yuan": 4246751232.0,
+   "main_inflow_yi": 42.5,
+   "leader_stock": "托伦斯",
+   "leader_change_pct": 20.0
+  },
+  {
+   "name": "半导体材料",
+   "change_pct": 11.89,
+   "main_inflow_yuan": 2205140560.0,
+   "main_inflow_yi": 22.1,
+   "leader_stock": "先导基电",
+   "leader_change_pct": 9.98
+  },
+  {
+   "name": "半导体",
+   "change_pct": 10.64,
+   "main_inflow_yuan": 19589070848.0,
+   "main_inflow_yi": 195.9,
+   "leader_stock": "新洁能",
+   "leader_change_pct": 9.99
+  },
+  {
+   "name": "集成电路制造",
+   "change_pct": 10.63,
+   "main_inflow_yuan": 1121872848.0,
+   "main_inflow_yi": 11.2,
+   "leader_stock": "华虹宏力",
+   "leader_change_pct": 17.25
+  },
+  {
+   "name": "黄金",
+   "change_pct": 10.59,
+   "main_inflow_yuan": 1844190656.0,
+   "main_inflow_yi": 18.4,
+   "leader_stock": "赤峰黄金",
+   "leader_change_pct": 10.0
+  },
+  {
+   "name": "贵金属",
+   "change_pct": 10.45,
+   "main_inflow_yuan": 2348954864.0,
+   "main_inflow_yi": 23.5,
+   "leader_stock": "盛达资源",
+   "leader_change_pct": 9.99
+  },
+  {
+   "name": "数字芯片设计",
+   "change_pct": 10.29,
+   "main_inflow_yuan": 8247195648.0,
+   "main_inflow_yi": 82.5,
+   "leader_stock": "瑞芯微",
+   "leader_change_pct": 10.0
+  },
+  {
+   "name": "白银",
+   "change_pct": 10.0,
+   "main_inflow_yuan": 504764352.0,
+   "main_inflow_yi": 5.0,
+   "leader_stock": "盛达资源",
+   "leader_change_pct": 9.99
+  }
+ ],
+ "行业板块领跌": [
+  {
+   "name": "电信运营商",
+   "change_pct": -3.27,
+   "main_inflow_yuan": -94471168.0,
+   "main_inflow_yi": -0.9,
+   "leader_stock": "中国联通",
+   "leader_change_pct": -1.76
+  },
+  {
+   "name": "水产饲料",
+   "change_pct": -3.12,
+   "main_inflow_yuan": -299820267.0,
+   "main_inflow_yi": -3.0,
+   "leader_stock": "粤海饲料",
+   "leader_change_pct": 0.0
+  },
+  {
+   "name": "乳品",
+   "change_pct": -2.6,
+   "main_inflow_yuan": -325850480.0,
+   "main_inflow_yi": -3.3,
+   "leader_stock": "皇氏集团",
+   "leader_change_pct": 0.8
+  },
+  {
+   "name": "饮料乳品",
+   "change_pct": -2.37,
+   "main_inflow_yuan": -366993584.0,
+   "main_inflow_yi": -3.7,
+   "leader_stock": "养元饮品",
+   "leader_change_pct": 2.89
+  },
+  {
+   "name": "白酒Ⅱ",
+   "change_pct": -1.81,
+   "main_inflow_yuan": -1401139840.0,
+   "main_inflow_yi": -14.0,
+   "leader_stock": "天佑德酒",
+   "leader_change_pct": 2.7
+  },
+  {
+   "name": "白酒Ⅲ",
+   "change_pct": -1.81,
+   "main_inflow_yuan": -1401139840.0,
+   "main_inflow_yi": -14.0,
+   "leader_stock": "天佑德酒",
+   "leader_change_pct": 2.7
+  },
+  {
+   "name": "软饮料",
+   "change_pct": -1.79,
+   "main_inflow_yuan": -41143095.0,
+   "main_inflow_yi": -0.4,
+   "leader_stock": "养元饮品",
+   "leader_change_pct": 2.89
+  },
+  {
+   "name": "国有大型银行Ⅲ",
+   "change_pct": -1.76,
+   "main_inflow_yuan": -98549792.0,
+   "main_inflow_yi": -1.0,
+   "leader_stock": "中国银行",
+   "leader_change_pct": -1.3
+  }
+ ],
+ "概念板块领涨": [
+  {
+   "name": "高带宽内存",
+   "change_pct": 11.53,
+   "main_inflow_yuan": 3678019840.0,
+   "main_inflow_yi": 36.8,
+   "leader_stock": "雅克科技",
+   "leader_change_pct": 10.01
+  },
+  {
+   "name": "大基金持股",
+   "change_pct": 10.53,
+   "main_inflow_yuan": 5576054272.0,
+   "main_inflow_yi": 55.8,
+   "leader_stock": "雅克科技",
+   "leader_change_pct": 10.01
+  },
+  {
+   "name": "中芯概念",
+   "change_pct": 10.11,
+   "main_inflow_yuan": 7530375680.0,
+   "main_inflow_yi": 75.3,
+   "leader_stock": "雅克科技",
+   "leader_change_pct": 10.01
+  },
+  {
+   "name": "百元股",
+   "change_pct": 9.85,
+   "main_inflow_yuan": 18643494656.0,
+   "main_inflow_yi": 186.4,
+   "leader_stock": "凯莱英",
+   "leader_change_pct": 10.0
+  },
+  {
+   "name": "先进封装",
+   "change_pct": 9.58,
+   "main_inflow_yuan": 11149776384.0,
+   "main_inflow_yi": 111.5,
+   "leader_stock": "托伦斯",
+   "leader_change_pct": 20.0
+  },
+  {
+   "name": "存储芯片",
+   "change_pct": 9.51,
+   "main_inflow_yuan": 18045150976.0,
+   "main_inflow_yi": 180.5,
+   "leader_stock": "先导基电",
+   "leader_change_pct": 9.98
+  },
+  {
+   "name": "科技风格",
+   "change_pct": 8.99,
+   "main_inflow_yuan": 27300376064.0,
+   "main_inflow_yi": 273.0,
+   "leader_stock": "北方华创",
+   "leader_change_pct": 10.0
+  },
+  {
+   "name": "基金重仓",
+   "change_pct": 8.71,
+   "main_inflow_yuan": 19589138944.0,
+   "main_inflow_yi": 195.9,
+   "leader_stock": "海安集团",
+   "leader_change_pct": 9.99
+  }
+ ],
+ "涨幅榜": [
+  {
+   "code": "920298",
+   "name": "腾信精密",
+   "price": 94.6,
+   "change_pct": 30.0,
+   "volume": 38724.0,
+   "amount_yuan": 324344424.15,
+   "amount_yi": 3.2
+  },
+  {
+   "code": "920770",
+   "name": "艾能聚",
+   "price": 11.92,
+   "change_pct": 29.99,
+   "volume": 188103.0,
+   "amount_yuan": 208389964.02,
+   "amount_yi": 2.1
+  },
+  {
+   "code": "920045",
+   "name": "蘅东光",
+   "price": 366.0,
+   "change_pct": 21.8,
+   "volume": 30895.0,
+   "amount_yuan": 1018719650.34,
+   "amount_yi": 10.2
+  },
+  {
+   "code": "688517",
+   "name": "金冠电气",
+   "price": 21.46,
+   "change_pct": 20.02,
+   "volume": 171849.0,
+   "amount_yuan": 348222307.0,
+   "amount_yi": 3.5
+  },
+  {
+   "code": "301697",
+   "name": "贝特利",
+   "price": 25.42,
+   "change_pct": 20.02,
+   "volume": 169893.0,
+   "amount_yuan": 422687502.24,
+   "amount_yi": 4.2
+  },
+  {
+   "code": "300943",
+   "name": "春晖智控",
+   "price": 25.78,
+   "change_pct": 20.02,
+   "volume": 213163.0,
+   "amount_yuan": 483203573.86,
+   "amount_yi": 4.8
+  },
+  {
+   "code": "688507",
+   "name": "索辰科技",
+   "price": 171.16,
+   "change_pct": 20.0,
+   "volume": 116847.0,
+   "amount_yuan": 1907983967.0,
+   "amount_yi": 19.1
+  },
+  {
+   "code": "688652",
+   "name": "京仪装备",
+   "price": 94.13,
+   "change_pct": 20.0,
+   "volume": 82566.0,
+   "amount_yuan": 705323911.0,
+   "amount_yi": 7.1
+  },
+  {
+   "code": "300489",
+   "name": "光智科技",
+   "price": 190.3,
+   "change_pct": 20.0,
+   "volume": 135563.0,
+   "amount_yuan": 2318724596.5,
+   "amount_yi": 23.2
+  },
+  {
+   "code": "688835",
+   "name": "高凯技术",
+   "price": 297.28,
+   "change_pct": 20.0,
+   "volume": 26089.0,
+   "amount_yuan": 713723115.0,
+   "amount_yi": 7.1
+  }
+ ],
+ "成交额榜": [
+  {
+   "code": "300308",
+   "name": "中际旭创",
+   "price": 533.38,
+   "change_pct": 11.07,
+   "volume": 611871.0,
+   "amount_yuan": 30668663859.0,
+   "amount_yi": 306.7
+  },
+  {
+   "code": "300502",
+   "name": "新易盛",
+   "price": 196.5,
+   "change_pct": 13.35,
+   "volume": 1142215.0,
+   "amount_yuan": 21024941889.73,
+   "amount_yi": 210.2
+  },
+  {
+   "code": "688825",
+   "name": "长鑫科技",
+   "price": 44.09,
+   "change_pct": 13.63,
+   "volume": 5056332.0,
+   "amount_yuan": 20996754861.0,
+   "amount_yi": 210.0
+  },
+  {
+   "code": "002384",
+   "name": "东山精密",
+   "price": 94.33,
+   "change_pct": 7.04,
+   "volume": 1988633.0,
+   "amount_yuan": 17652381707.28,
+   "amount_yi": 176.5
+  },
+  {
+   "code": "300750",
+   "name": "宁德时代",
+   "price": 252.88,
+   "change_pct": 1.43,
+   "volume": 562441.0,
+   "amount_yuan": 14141043410.54,
+   "amount_yi": 141.4
+  },
+  {
+   "code": "688256",
+   "name": "寒武纪",
+   "price": 847.66,
+   "change_pct": 10.38,
+   "volume": 153880.0,
+   "amount_yuan": 12350696391.0,
+   "amount_yi": 123.5
+  },
+  {
+   "code": "603986",
+   "name": "兆易创新",
+   "price": 271.38,
+   "change_pct": 8.48,
+   "volume": 436424.0,
+   "amount_yuan": 11348674130.0,
+   "amount_yi": 113.5
+  },
+  {
+   "code": "600519",
+   "name": "贵州茅台",
+   "price": 1446.44,
+   "change_pct": -2.27,
+   "volume": 65434.0,
+   "amount_yuan": 9536447975.0,
+   "amount_yi": 95.4
+  },
+  {
+   "code": "601899",
+   "name": "紫金矿业",
+   "price": 29.25,
+   "change_pct": 6.56,
+   "volume": 3319119.0,
+   "amount_yuan": 9419170451.0,
+   "amount_yi": 94.2
+  },
+  {
+   "code": "300394",
+   "name": "天孚通信",
+   "price": 136.0,
+   "change_pct": 10.02,
+   "volume": 736013.0,
+   "amount_yuan": 9382041159.46,
+   "amount_yi": 93.8
+  }
+ ],
+ "大盘资金与涨跌家数": [
+  {
+   "name": "上证指数",
+   "main_inflow_yuan": 18923085824.0,
+   "main_inflow_yi": 189.2,
+   "advancers": 1849.0,
+   "decliners": 440.0,
+   "flat": 68.0
+  },
+  {
+   "name": "深证成指",
+   "main_inflow_yuan": 31105028096.0,
+   "main_inflow_yi": 311.1,
+   "advancers": 2547.0,
+   "decliners": 331.0,
+   "flat": 60.0
+  }
+ ],
+ "国家队宽基ETF": [
+  {
+   "name": "沪深300ETF华泰柏瑞",
+   "price": 4.175,
+   "prev_close": 4.092,
+   "open": 4.086,
+   "change": 0.083,
+   "change_pct": 2.03,
+   "high": 4.191,
+   "low": 4.062,
+   "amount_yuan": 12562217194.0,
+   "amount_yi": 125.6,
+   "volume_ratio": 1.17,
+   "quote_time": "20261104161431",
+   "_secid": "1.510300",
+   "prev5_avg_volume": 23971586.17,
+   "today_volume": 30473917.0,
+   "volume_spike_ratio": 1.27,
+   "fund_total_shares": 37475587584.0,
+   "fund_total_shares_prev": 44587387648.0,
+   "fund_share_change": -7111800064.0
+  },
+  {
+   "name": "中证500ETF南方",
+   "price": 6.661,
+   "prev_close": 6.38,
+   "open": 6.374,
+   "change": 0.281,
+   "change_pct": 4.4,
+   "high": 6.688,
+   "low": 6.35,
+   "amount_yuan": 9897202392.0,
+   "amount_yi": 99.0,
+   "volume_ratio": 1.52,
+   "quote_time": "20261104161443",
+   "_secid": "1.510500",
+   "prev5_avg_volume": 9370468.17,
+   "today_volume": 15199122.0,
+   "volume_spike_ratio": 1.62,
+   "fund_total_shares": 6884968704.0,
+   "fund_total_shares_prev": 6779368704.0,
+   "fund_share_change": 105600000.0
+  },
+  {
+   "name": "上证50ETF华夏",
+   "price": 2.923,
+   "prev_close": 2.884,
+   "open": 2.88,
+   "change": 0.039,
+   "change_pct": 1.35,
+   "high": 2.929,
+   "low": 2.865,
+   "amount_yuan": 3068062870.0,
+   "amount_yi": 30.7,
+   "volume_ratio": 0.68,
+   "quote_time": "20261104161442",
+   "_secid": "1.510050",
+   "prev5_avg_volume": 14157822.83,
+   "today_volume": 10584606.0,
+   "volume_spike_ratio": 0.75,
+   "fund_total_shares": 12321666816.0,
+   "fund_total_shares_prev": 12791466752.0,
+   "fund_share_change": -469799936.0
+  },
+  {
+   "name": "中证1000ETF南方",
+   "price": 2.652,
+   "prev_close": 2.535,
+   "open": 2.535,
+   "change": 0.117,
+   "change_pct": 4.62,
+   "high": 2.662,
+   "low": 2.526,
+   "amount_yuan": 10519449491.0,
+   "amount_yi": 105.2,
+   "volume_ratio": 1.48,
+   "quote_time": "20261104161441",
+   "_secid": "0.512100",
+   "prev5_avg_volume": 25252638.5,
+   "today_volume": 40653977.0,
+   "volume_spike_ratio": 1.61,
+   "fund_total_shares": null
+  }
+ ],
+ "沪铝主力": {
+  "name": "沪铝主连",
+  "price": 23000.0,
+  "prev_close": 23035.0,
+  "change_pct": -0.5,
+  "volume": 205657.0,
+  "amount": 23646112025.0
+ },
+ "LME铝": {
+  "name": "综合铝03",
+  "price": 3064.0,
+  "prev_close": 3040.5,
+  "change": 19.5,
+  "change_pct": 0.64,
+  "source": "eastmoney"
+ },
+ "铝板块个股": [
+  {
+   "name": "中国铝业",
+   "price": 8.83,
+   "prev_close": 8.7,
+   "open": 8.76,
+   "change": 0.13,
+   "change_pct": 1.49,
+   "high": 8.85,
+   "low": 8.54,
+   "amount_yuan": 1709106704.0,
+   "amount_yi": 17.1,
+   "volume_ratio": 1.24,
+   "quote_time": "20261104161452"
+  },
+  {
+   "name": "云铝股份",
+   "price": 25.3,
+   "prev_close": 25.08,
+   "open": 25.05,
+   "change": 0.22,
+   "change_pct": 0.88,
+   "high": 25.52,
+   "low": 24.8,
+   "amount_yuan": 1337959855.0,
+   "amount_yi": 13.4,
+   "volume_ratio": 1.36,
+   "quote_time": "20261104161445"
+  },
+  {
+   "name": "神火股份",
+   "price": 26.06,
+   "prev_close": 25.78,
+   "open": 25.7,
+   "change": 0.28,
+   "change_pct": 1.09,
+   "high": 26.45,
+   "low": 25.69,
+   "amount_yuan": 1076859304.0,
+   "amount_yi": 10.8,
+   "volume_ratio": 1.77,
+   "quote_time": "20261104161415"
+  },
+  {
+   "name": "天山铝业",
+   "price": 12.26,
+   "prev_close": 12.13,
+   "open": 12.13,
+   "change": 0.13,
+   "change_pct": 1.07,
+   "high": 12.3,
+   "low": 11.92,
+   "amount_yuan": 794652924.0,
+   "amount_yi": 7.9,
+   "volume_ratio": 1.14,
+   "quote_time": "20261104161445"
+  }
+ ],
+ "库存数据": {
+  "沪铝仓单_错误": "futures_inventory_99() got an unexpected keyword argument 'e",
+  "LME铝库存_报告": [
+   {
+    "日期": "2026-07-16"
+   },
+   {
+    "日期": "2026-07-17"
+   }
+  ]
+ },
+ "news": {
+  "A股收盘": [
+   {
+    "title": "A股低开低走 双创指数均跌超4%",
+    "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE92RTV0OHhiTlVPUS1Ld0VybWFQX0lOUmJRdURxOTVBOFZvaXpMNTIxMDVUVHFNTkt1ZlppZFVaQUd3dkRJQ3RkN0xTRTY2Zw?oc=5",
+    "pubDate": "Thu, 29 Oct 2026 07:16:50 GMT",
+    "source": "观点网"
+   },
+   {
+    "title": "A股早盘震荡走软沪指半日跌0.71% CPO、PCB板块跌幅居前_滚动新闻",
+    "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBtRmpHV2ZwNFJuX1pyclo4NHJ4ZDlfNFBSQXVRaUFXZTRiVU1hLW5tRFFvR20xTExTSDNTWnlDQXM1MHV2Y3FGaERBdE1mZWhfVnM0NlFnaXFWc3ZCOXo1THluQkY?oc=5",
+    "pubDate": "Tue, 03 Nov 2026 03:35:00 GMT",
+    "source": "证券之星"
+   },
+   {
+    "title": "A股收盘 | 三大指数涨跌分化，沪指涨0.12%，人形机器人概念领涨",
+    "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9DNUE2b3JKMDczZXRzc3lTcExEUXZKdllSalo5UXdycERlcVp5OC1GQ1ktZ0J3VXVPeENBeklmVmJvXzdYOXpZMlFBaUhsU2t0cVJhWXdhaWNxSktLRGl3ZA?oc=5",
+    "pubDate": "Tue, 20 Oct 2026 07:00:00 GMT",
+    "source": "东方财富"
+   },
+   {
+    "title": "收盘｜沪指涨1.08% 文化传媒股批量涨停",
+    "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5xcXpWcGJnb0I4V0JwTjg2b3JwQjljZW1BWWg5MVh5WTYyOEhSd2tyMnBpQWpDWEo5OEZnREVGeVV0MGE4WkR6TWlSVnpqTUtreUdsRW5GMWJmZDZRczhLSmlzejBGR3c4TWpDU2hn?oc=5",
+    "pubDate": "Mon, 02 Nov 2026 07:18:54 GMT",
+    "source": "finance.sina.com.cn"
+   },
+   {
+    "title": "A股收盘｜沪指涨1.08% 文化传媒股批量涨停",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNeXpHNFNVdkgxUW5zZWJCVkVtSXdOS1djX0xDakhBVjE4WnVsLU9Vakl2eV9jMFN5VU1MSXd3N3c0QkNWZFNCTmlIRTJXdkVDOHQteExnaWQ0MTNSNWNXcE82OE9qbkM5Nk9iaU1rNHAxNXJ3ZVRyUjRXNmVhSmpPcDFwWQ?oc=5",
+    "pubDate": "Mon, 02 Nov 2026 07:35:35 GMT",
+    "source": "手机新浪网"
+   },
+   {
+    "title": "午后大逆转！A股三大指数探底回升，沪指重新站上3800点，PCB、覆铜板掀涨停潮，军工爆发，恒指转涨",
+    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBsdWlic0RucnhMVVVJUG5ZeWZTLXdJeTZiWk5INFJkV0czRmc5cC1veGFsSWp3bjZ2RmYzcFJyRDQwbGRWSlJKWC1lcDRGcFZPRVpR?oc=5",
+    "pubDate": "Tue, 13 Oct 2026 07:00:00 GMT",
+    "source": "华尔街见闻"
+   }
+  ],
+  "国家队": [
+   {
+    "title": "宽基ETF又见证历史时刻，“国家队”曾重仓的多只ETF显著放量",
+    "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5ZUW1waHU1NVpsLVFiY3FBTEowZHQxclNISS1vU0dmNzFPRF9TSVkwZTdZU1F6d2ZVRkZkUnZHcXNJNnU4Uzh1Rw?oc=5",
+    "pubDate": "Mon, 20 Jul 2026 07:00:00 GMT",
+    "source": "财联社"
+   },
+   {
+    "title": "国家队赎回、科技主题崛起！ETF大洗牌 “一哥”陷拉锯战",
+    "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFAwbkJUTVJMcER6OWJBREVOZG9tV2ZwNlhCeUhuU1hEc3RhWERSQWw0R191Zjc2TlVvWmQxWlo2cGxvenQwZGpYOTE2MGFhRkhFMjJFeDdFTFd0NWtMMUJsRA?oc=5",
+    "pubDate": "Mon, 06 Jul 2026 07:00:00 GMT",
+    "source": "东方财富"
+   },
+   {
+    "title": "国家队历次进场后，A股怎么走？",
+    "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1OalpIblB3a0FoRWhlSW5kdTRXazRWc2U2VUR1UnFyU1hBZEJORVJxa2RDcm5uVnVQZ3V6OHY0eVNOd3RualRxR3RNZDVqNjFhZjNOTldXNTN6QkdOZk56NUdhTG1BbTNOVXpmRlQyTUd5QlQxS194YnJJM3c?oc=5",
+    "pubDate": "Tue, 21 Jul 2026 07:00:00 GMT",
+    "source": "央视网"
+   },
+   {
+    "title": "再度出手！一图梳理近年国家队增持节点",
+    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPS1VkVE5FSjJDei0tTDBHZUNEbjVjVW5tcGpHWGdIelItTWxjZlNHUkR5ZGY0YTlFdWdaU0tqemRNUjU4dS1RY0p2Zl9rN3Z6cGl0M1FWNUZxOVAzbTJ4eGU2NUNidHRCcmYwU095cDBERHotOVNDSFU4M3dENHg2aFd3RU92SmRiNlFkWA?oc=5",
+    "pubDate": "Wed, 22 Jul 2026 07:00:00 GMT",
+    "source": "21财经"
+   },
+   {
+    "title": "彭博：中国国家队ETF持仓今年上半年料减90%",
+    "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1ZQmJJRlloemVpQTJETXZoU2pDUjlpRWVmT1lyMXp2bEJ2OWJsaWQ0dF9WT3NGYkYzNWJENEJfWnM4SWFFZE9UU3Z4Q2dmVjJyeUlpeU9qRXV1dDJTcHA0RXg2ZTNJdTBuSkE?oc=5",
+    "pubDate": "Fri, 22 May 2026 07:00:00 GMT",
+    "source": "联合早报"
+   },
+   {
+    "title": "“国家队”1.5万亿持仓曝光 多只行业主题ETF获加仓",
+    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBWNENOOV9ENUJYaldSdUUzY3BqYXdSeGVBRzZXWWEyM2Nkb0FzWjF4eXJoMnl1enZ2WXZaQ2R4blRLd3VLakMwY2I3ZnI2UTdXbjhvRlh1YU9oZU5jU3pOajRtQ3ZyVzR0eTY2N3pQLVdtYnVrZHlNcg?oc=5",
+    "pubDate": "Thu, 09 Apr 2026 07:00:00 GMT",
+    "source": "新浪财经"
+   }
+  ],
+  "电解铝库存": [
+   {
+    "title": "氧化铝库存升至714.1万吨，电解铝社会库存降至50.6万吨",
+    "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBlcUtkSHVOYk9XUkdvOW9zcmhvbTU4U25JclRvcmJFQXlQaFZScUVFWFZ0anhoM1JWUGRBMmJrLWVTZ0Mxa2NxZA?oc=5",
+    "pubDate": "Wed, 04 Nov 2026 01:31:35 GMT",
+    "source": "https://news.cncaa.org/"
+   },
+   {
+    "title": "云铝股份2026年三季报点评：成本端持续改善推动盈利上行 | 东吴金属刘奕町团队",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQSW1jWTlxMUZRb2VreER4YTEtQktJM2htVmoyT1hFOXlDN0NmY1hhUm93SHhvYVNxVmhuVGpLN0NkNF94dmZaQjJ1WXREWUFuaWxmRkdESE9BaTRyVXFxVXlsOVpyQjdPTE1Qak1XX1F0cV9iM3Fsbl9pUXJRUXdiLXpmdw?oc=5",
+    "pubDate": "Sun, 01 Nov 2026 18:10:29 GMT",
+    "source": "手机新浪网"
+   },
+   {
+    "title": "库存见底、产能被AI“抢走”、分红接棒周期：铝板块迎来三重价值重估",
+    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONkQ3YXM1Mzd3RnlzNy02VFBpQWVaSXRTMTU1Q211enJGdFhTUkZVSm1NYVhMSUE0NklHakNYWGhPVF8yQ2JPZDBOX1V3UFR2aDlfNURpUHR2S1ltT0t0dFJhVjhmOVg1LWUxNXFKVmxpVzgzckplTG9WWTJDWmdxSmNUdEl0RU1CRHJOTg?oc=5",
+    "pubDate": "Tue, 27 Oct 2026 02:23:39 GMT",
+    "source": "搜狐网"
+   },
+   {
+    "title": "6月2日铜铝库存统计分析日报：全球铝库存仅余9天安全线！铜原料危机持续发酵",
+    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFB1VktpakxsY0UzNVFUSVAzc2lrUzZydFlleEZwdVAzdGZYWXhjLUowSVhPS1BQc04zMXNUM0paOS1pY1N3TFdua2lDM3lIS2hnTVpFSk83enppVVRUR1N2dVdHd01EZWxreEswWEJRVXYxNm9xS0hheA?oc=5",
+    "pubDate": "Tue, 02 Jun 2026 07:00:00 GMT",
+    "source": "新浪财经"
+   },
+   {
+    "title": "单吨盈利刷新历史极值 库存去化初显 电解铝高景气能持续多久？丨传真",
+    "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE54VWM5TXRiTlJqYlFvQzZtemxNUzB5Z2FGM0dpTk44QUhjZ214R1lnLXRhMFB2TldyRXFlOXdaaGVpbTNWbVphTA?oc=5",
+    "pubDate": "Sat, 09 May 2026 07:00:00 GMT",
+    "source": "财联社"
+   },
+   {
+    "title": "3月铝价上涨，后市怎么看？",
+    "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPYlEzcnZocWROOVhfTExLWm1xeE45SUFtU3I4VHllZkM3OEFvQmR6YkVlRWo0R09LYU04YmRFenBGR1l4dmVQYmRiOXN3SGg0SFVNWGdnQ1dYT1BFbXNjZ005MEFrX3ZQbi1nRENGS2lIVzZ0ZVM3OW9qZjYwTzB6cXJGc3dnck5nNFE?oc=5",
+    "pubDate": "Wed, 01 Apr 2026 07:00:00 GMT",
+    "source": "旅日侨网"
+   }
+  ],
+  "氧化铝": [
+   {
+    "title": "铝价上行成本改善，盈利弹性大幅释放_公司研究_研报",
+    "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBvRTVyUURyRjFYYXFkQW96MGd0YzZ3ellsdmEwaVVGdl9hMEpyeXZMNXB0ai1qRGYxVUpCbnY5UFZHY2draU5SR282RHFWSGFRTGtTVWR0RFFqa3VFOGRQUmpn?oc=5",
+    "pubDate": "Sun, 01 Nov 2026 04:18:00 GMT",
+    "source": "证券之星"
+   },
+   {
+    "title": "云铝股份2026年三季报点评：成本端持续改善推动盈利上行 | 东吴金属刘奕町团队",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQSW1jWTlxMUZRb2VreER4YTEtQktJM2htVmoyT1hFOXlDN0NmY1hhUm93SHhvYVNxVmhuVGpLN0NkNF94dmZaQjJ1WXREWUFuaWxmRkdESE9BaTRyVXFxVXlsOVpyQjdPTE1Qak1XX1F0cV9iM3Fsbl9pUXJRUXdiLXpmdw?oc=5",
+    "pubDate": "Sun, 01 Nov 2026 18:10:29 GMT",
+    "source": "手机新浪网"
+   },
+   {
+    "title": "瑞银：中国铝业维持“买入”评级 目标价12.8港元",
+    "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQLXVwSXZyYVhOSTVPOVh4NXBWY2szNXVFR01PS1U3UHk4VWFzTktFbDRTLXMxbEJVMHAza0FjR2hYSEtGeFNNVy1rcnVidjRzUTAwNWRDQl9rM1hWRHlDN2dPaUVDaFlEcGhsX3paNDQzQWxTUnVIdjNNSXR6eFdWNHE2Y1dsY2prLXMtRVpsUQ?oc=5",
+    "pubDate": "Sat, 31 Oct 2026 20:08:29 GMT",
+    "source": "新浪财经"
+   },
+   {
+    "title": "利润总额387.28 亿！又一家铝企巨头赚翻了！",
+    "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPY2Z0Ny1uN3lDRW8tRnF4TThLejJoMDFqYVhpaXgtRWtGeXRVQUlkWjg2NWJqMzdmWFVYTVZDNE1qVThXTk9aazVhOUxBVHVOVzFVeW9GQzR1MWhSLWJuY0VVanByT21lbnpPTEdBSTRSamZGcGhrN0RuR0RDd1E2dXdCMGNtWG9tQ21VQQ?oc=5",
+    "pubDate": "Thu, 29 Oct 2026 16:30:58 GMT",
+    "source": "搜狐网"
+   },
+   {
+    "title": "铝价涨、成本降“剪刀差”驱动，神火股份前三季度预盈74亿元",
+    "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPRlotLXpiTjNDSEpDdTdmbmxrNzRWRnMwUG5oaUpqZFBoY3Zxa1hZMXc5Y2RadW82cnlZR3dBNk5NYzQybHF0dDhPY0NPaHpQUzRWd19HX1hJbVNFd2xlZUZ5a09pM3poZ2IyczVDV3dwRHRybVR4bEdQaHRTdEoxa1RLRW11ZDNPTE4xcW5KSQ?oc=5",
+    "pubDate": "Tue, 13 Oct 2026 07:00:00 GMT",
+    "source": "21财经"
+   },
+   {
+    "title": "期市头条丨氧化铝-上有过剩压顶，下有成本托底",
+    "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9IOEFDR1ZuS0lLRUx6bF9EZWdDLXpwM19Zb3Z5U3BGY204cWp1Vm44MDE3ZmZLTjI4aEVkdVJxQnlRWlJOekEtZ0VJTFE2WTA1OWVoS2pRSnlDM1BkMEoyWHEtaWpwR3dIcVhR?oc=5",
+    "pubDate": "Fri, 16 Oct 2026 07:00:00 GMT",
+    "source": "财富号"
+   }
+  ],
+  "电解铝产能": [
+   {
+    "title": "华尔街“哭了”，求求中国别再让铝厂出海这帮“敢死队”把铝价卷崩了",
+    "link": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE1RVUtWZVpTbXExUXBjdmJ6N3pvQXVJM2dVamZZNHdLQkdxSWNzcllEVE15N1NhYjgwaVVSRlZnRS14cC1SekctQmM0WmR1Zm9uM3BkcG5B?oc=5",
+    "pubDate": "Fri, 30 Oct 2026 11:26:00 GMT",
+    "source": "QQ News"
+   },
+   {
+    "title": "四川印发重点行业节能降碳改造攻坚三年行动方案",
+    "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBVOU1kNjFJTlplc2tMZnIzdnozRVM4YXZTVnlkWGlTS0h2enpheVdYSnhncTllWGFnUHFJQjJMZmdxazkweEo3Z2lRd2FTVFBWanBDaVd4WVpNbS13U2JaSDNYU04zZXVMUkowbUE0cGk?oc=5",
+    "pubDate": "Wed, 28 Oct 2026 03:02:57 GMT",
+    "source": "中国能源新闻网"
+   },
+   {
+    "title": "美国推出“本土建厂 关税减半”政策 激励投资新建电解铝厂",
+    "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE8wZEQ2eDBfZ1NrNVdvc01SQzE5YXFqR2phREE3MDBncC02dzluWURXQmNsNHA0cTFseDZZMnByQlBTRFl3Zmh1S3BRMWRmZEJSajEtSmRZc0R2MFdydXpENw?oc=5",
+    "pubDate": "Mon, 27 Jul 2026 07:00:00 GMT",
+    "source": "东方财富"
+   },
+   {
+    "title": "重点行业节能降碳改造如何推进？",
+    "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQTmJ1cGd1bkNWcmpscW1jMGtUMks2X201bFl5ZzJxMXlPeVJ2dXgyQW4zVXV4THI5bjR2dWxhY3F1a0k1aElzM3BXbXJ3V0duSVk2ZTktQVVxcE5hVGJ3UDJ5MGhoVHFTMmVJX0x1R1ZURnV4RWVPWFJwekhVZVhNVlg3SQ?oc=5",
+    "pubDate": "Mon, 22 Jun 2026 07:00:00 GMT",
+    "source": "人民日报"
+   },
+   {
+    "title": "扼住上游“绿色咽喉”：宏创控股如何将水电铝、再生铝打造成ESG时代的“新石油”？",
+    "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFB6eE5GcXlsUWJ6OVRKS2hjT053UGNlLUFCT09GdTZCdDM1NXN3M3FEVnFLUjRIdDNEQk9FMXVYQlNRdGNJRlBBaFdBVEdBckJ4NzlYcGJHZFlBQTVmZGc?oc=5",
+    "pubDate": "Thu, 15 Jan 2026 08:00:00 GMT",
+    "source": "中华网"
+   },
+   {
+    "title": "从退市边缘到利润暴增、重启分红，中孚实业经历了什么",
+    "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBEak1nOHQtTF9zeGtJa1pfRVIzd1BYVzdMRV9OWWViX0VSOUY4OHd0Q0VoX244SkhPTUNIclRJQXNVemlXVmZjMmpuWnIzUQ?oc=5",
+    "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT",
+    "source": "36氪"
+   }
+  ],
+  "铝板块": [
+   {
+    "title": "去年10月 $中国铝业(SH601600)$ 股价起飞之前，写了一篇关于铝行业的，推荐了 中国铝业 和 南山铝业 这两家公司。",
+    "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE00WFZXbXlIb3V6RWtNREZGSkxFMXozWWIzSW1kVHkzUGhyN2JUTGlpWlRoQU81d1d5cE9sd2V1Z2ZybjZrVUxpbGpNT0lHM0dD?oc=5",
+    "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT",
+    "source": "雪球"
+   },
+   {
+    "title": "电解铝价格延续强势，中国铝业等有望放大利润空间",
+    "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBDenYxbklacmZQZkczZWZ2VThvbkJZSE42UTdpZUUxUGZnd05XYlIxMFYtLWVJVlU3Q3dkbTVnUWFweWZnRGItOHhMdVpKUEhTaU9KUEx4cnNLbzktTHIzMHJfdmNkdw?oc=5",
+    "pubDate": "Sun, 21 Dec 2025 08:00:00 GMT",
+    "source": "证券市场周刊"
+   },
+   {
+    "title": "盘中必读|LME期铝主力合约创新高，电解铝概念表现活跃，中国铝业等多股涨停",
+    "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE02OUJ0dzM5TW9qUkgtRVZXVlg2UmtMcDJXa0Z1XzhZVTlYTFpneWU2MTRlNm1pWV9MZUg4TFA3SzU5WWRrSnZ2SFdSTWNRQkRzSVdhQ2Z6djc?oc=5",
+    "pubDate": "Tue, 27 Jan 2026 08:00:00 GMT",
+    "source": "Jiemian.com"
+   },
+   {
+    "title": "电解铝产能“天花板”催生供应压力 港股两大铝业龙头再创年内新高",
+    "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBWSDVmclFUY3luRkJkMnZCejlfbUF4Z2JacHNJM1lrNHFqekZ1ajRWUWw2MzlVclkxYlBFbXVpVFhRdEhqbkd2aw?oc=5",
+    "pubDate": "Thu, 13 Nov 2025 07:37:00 GMT",
+    "source": "财联社"
+   },
+   {
+    "title": "有色起舞，铝业领涨，天风称“电解铝是弹性与红利的完美融合”",
+    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9fTEpUUlJCQ2JPeGIyWlBEMUl1ZDJLTi1uYjNpLUwtQi1QX3RidWl4bzFTbUxTSFJBZVc4N0VRWmowam9WdURqeUN2cHE1ZS00R0Y0?oc=5",
+    "pubDate": "Thu, 06 Nov 2025 08:00:00 GMT",
+    "source": "华尔街见闻"
+   },
+   {
+    "title": "上市公司涉铝产业基本信息一览表（一）",
+    "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5ESGtpV0RCU0VnbVlvZjFhSEQydnRCc2EyTjVyTkJyT1RUOVBNLXdzSEp3TVNkMjMwV2NzYmxlZG9FMVlUN24xNzlnTnNRYlVSUU5ReDBaUWo5blgtTXBfa0ViQ1FIQQ?oc=5",
+    "pubDate": "Mon, 12 Aug 2024 07:00:00 GMT",
+    "source": "Cnal.com"
+   }
+  ],
+  "新浪7x24快讯": [
+   {
+    "time": "2026-11-04 16:41:13",
+    "text": "NXERA制药与艾伯维就NXE0033744达成全球许可协议，该药物是一种用于炎症性肠病的新型EP4受体激动剂。",
+    "link": ""
+   },
+   {
+    "time": "2026-11-04 16:40:11",
+    "text": "【芯导科技：发行可转债及现金购买资产交易总对价4.03亿元】芯导科技公告称，公司拟通过发行可转换公司债券及支付现金的方式，购买吉瞬科技100%股权、瞬雷科技17.15%股权，从而直接及间接持有瞬雷科技100%股权，本次交易总对价为4.03亿元，其中现金对价1.27亿元，可转债对价2.76亿元。本次发行的可转债初始转股价格为42.79元/股，经2025年度利润分配调整后为42.36元/股，债券期限4年，票面利率0.1%/年。本次交易构成重",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9380607.d.html"
+   },
+   {
+    "time": "2026-11-04 16:39:30",
+    "text": "土耳其主要的 BIST-100 指数  扩大涨幅，上涨 3%。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9380169.d.html"
+   },
+   {
+    "time": "2026-11-04 16:39:24",
+    "text": "【中国石油集团昆仑制造与宇树科技等经营者新设合营企业案进入公示期】据北京市市场监督管理局网站消息，中国石油集团昆仑制造有限公司与宇树科技股份有限公司等经营者新设合营企业案进入公示期，公示期为2026年11月4日至2026年11月13日。根据简易案件公示表，中国石油集团昆仑制造有限公司（“昆仑制造”）及其一致行动人中国石油集团昆仑资本有限公司（“昆仑资本”）、宇树科技股份有限公司（“宇树科技”）、北京泛界智能科技有限公司（“泛界智能”）签",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9380097.d.html"
+   },
+   {
+    "time": "2026-11-04 16:39:13",
+    "text": "三星电子收购TCL华星10.16%股权，深化战略协同与业务合作。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9379953.d.html"
+   },
+   {
+    "time": "2026-11-04 16:38:53",
+    "text": "港交所文件：汇丰银行于11月3日在其他交易所回购总计17万股，耗资220万英镑。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkx8051137.d.html"
+   },
+   {
+    "time": "2026-11-04 16:38:30",
+    "text": "根据港交所文件，汇丰银行于11月3日回购了60万股股票，耗资8060万港元。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6155524.d.html"
+   },
+   {
+    "time": "2026-11-04 16:38:26",
+    "text": "【美国中期选举牵动全球金融市场 民主党大胜引发比特币震荡金价飙升】全球多个市场收敛了民主党横扫美国国会引发的跌势，投资者一方面在权衡总统特朗普的政策可能面临更严审查，另一方面也在考虑国会议员在重塑其议程方面将受到的限制。亚洲科技股和美元最初承压，美国国债则上涨，因为华盛顿可能陷入政治僵局，促使投资者重新考虑围绕特朗普着力去监管、减税和推动AI快速扩张而开展的交易。在民主党的掌控下，国会可能加强对数据中心建设的监管，并挑战特朗普部分经济议",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkz0133851.d.html"
+   },
+   {
+    "time": "2026-11-04 16:37:50",
+    "text": "【中华人民共和国国际贸易谈判代表兼商务部副部长李成钢会见加拿大国际贸易副部长珀维斯】11月4日，中华人民共和国国际贸易谈判代表（正部长级）兼商务部副部长李成钢会见加拿大国际贸易副部长珀维斯。双方就中加经贸关系、中加投资工作组有关工作及各自关心的经贸问题进行深入沟通和交流。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6155068.d.html"
+   },
+   {
+    "time": "2026-11-04 16:37:17",
+    "text": "【上海医药：曲前列尼尔二乙醇胺吸入粉雾剂获临床试验批准】上海医药公告称，公司下属上药睿尔收到国家药监局核准签发的曲前列尼尔二乙醇胺吸入粉雾剂《药物临床试验批准通知书》，同意本品开展临床试验。该药物为2.2类改良型创新药，拟用于治疗肺动脉高压以减轻运动引起的相关症状，截至公告披露日累计投入研发费用约2141万元，目前尚未在全球任何国家或地区获得上市许可。本次获批对公司经营情况无重大影响，新药研发存在不确定性，敬请投资者注意风险。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9378632.d.html"
+   },
+   {
+    "time": "2026-11-04 16:37:10",
+    "text": "【嘉泽新能在宁夏成立新能源公司】企查查APP显示，近日，宁夏博骏新能源有限公司成立，经营范围包含：风力发电技术服务；太阳能发电技术服务；生物质能技术服务；合同能源管理等。企查查股权穿透显示，该公司由嘉泽新能全资持股。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkz0133067.d.html"
+   },
+   {
+    "time": "2026-11-04 16:37:07",
+    "text": "【上海医药：控股股东拟增持1100万至2200万股H股股份】上海医药公告称，公司控股股东上实集团的全资子公司上实国际于2026年11月2日增持公司80万股H股，增持金额883.9万元，占总股本0.02%。本次增持后，上实国际持有公司3.75亿股H股，占总股本的10.119%。上实集团计划由上实国际在2026年11月2日至2027年11月1日期间，通过港交所集中竞价方式增持公司H股1100万股至2200万股，占总股本0.3%至0.6%，不",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9378494.d.html"
+   },
+   {
+    "time": "2026-11-04 16:37:01",
+    "text": "【光大证券中标第三次互换便利（SFISF）操作】近日，中国人民银行开展第三次证券、基金、保险公司互换便利（SFISF）操作，本次操作总额1000亿元，中标费率10bp，互换期限1年、可视情展期。券中社记者获悉，光大证券成功中标本次互换便利操作。光大证券表示，本次中标后，将严格按照监管相关要求，合规高效用好本次中标额度，加快业务落地，发挥资本市场中介机构 “压舱石”作用，助力改善市场流动性、稳定市场预期。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9378427.d.html"
+   },
+   {
+    "time": "2026-11-04 16:36:37",
+    "text": "波音：此次采购使 Avolon 的 737 MAX 积压订单增加至 240 多架。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkz0132754.d.html"
+   },
+   {
+    "time": "2026-11-04 16:36:28",
+    "text": "瑞典央行表示，此举并非旨在影响长期外汇储备规模。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkx8049730.d.html"
+   },
+   {
+    "time": "2026-11-04 16:36:15",
+    "text": "【第九届进博会中国石化采购签约达413亿美元】第九届中国国际进口博览会中国石化主题论坛暨中国石化交易分团签约仪式在上海举办。签约仪式上，中国石化与来自18个国家、地区的37家合作伙伴签约，涉及绿色低碳、人工智能、高端装备、数字供应链等14大类29种产品，采购签约金额达413亿美元。自2018年首届进博会以来，九届进博会中国石化累计签约超3660亿美元。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkz0132533.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:53",
+    "text": "瑞典央行还计划替换用于对冲的外汇互换。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6153635.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:50",
+    "text": "【范式智能等成立智能科技公司 含AI及数据处理业务】企查查APP显示，近日，北京鸣谷智能科技有限公司成立，法定代表人为李卓，经营范围包含：人工智能理论与算法软件开发；人工智能应用软件开发；人工智能基础软件开发；数据处理和存储支持服务等。企查查股权穿透显示，该公司由范式智能全资子公司范式矩阵（北京）控股有限公司等共同持股。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6153602.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:42",
+    "text": "瑞典央行：瑞典央行计划通过瑞典国家债务办公室以外币贷款的方式为部分外汇储备提供资金。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9377482.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:39",
+    "text": "【ST嘉必优：商业秘密纠纷再审申请被驳回 二审胜诉有效】ST嘉必优公告称，公司收到最高人民法院民事裁定书，驳回中科鸿基生物科技有限公司就商业秘密纠纷案件的再审申请。公司为该案被申请人，中科鸿基此前诉请公司等三方赔偿经济损失500万元、维权合理费用15万元及相关诉讼费用，该案一审、二审公司均胜诉。本次裁定不影响已生效的二审胜诉判决法律效力，不会对公司本期及期后利润产生影响。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6153456.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:28",
+    "text": "【清新环境：累计诉讼仲裁涉案金额6.16亿元 占净资产11.25%】清新环境公告称，截至本公告披露日，公司及控股子公司连续十二个月内累计发生尚未披露的诉讼、仲裁事项涉案金额合计约6.16亿元，占公司最近一期经审计净资产的11.25%。其中作为原告涉案金额约5.40亿元，作为被告涉案金额约7562.31万元。不存在单项涉案金额占最近一期经审计净资产绝对值10%以上且绝对金额超1000万元的重大诉讼、仲裁事项。部分案件尚未开庭、结案或执行完",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9377268.d.html"
+   },
+   {
+    "time": "2026-11-04 16:35:18",
+    "text": "欧舒丹集团与PAI Partners就ELEMIS达成交易。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkz0132022.d.html"
+   },
+   {
+    "time": "2026-11-04 16:34:59",
+    "text": "瑞典央行计划提供约2000亿瑞典克朗的融资。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhkx8048909.d.html"
+   },
+   {
+    "time": "2026-11-04 16:34:54",
+    "text": "【拓新药业：拟定增募资不超2.28亿元投建生物制造基地】拓新药业公告称，公司2026年度向特定对象发行股票事项已经深交所审核通过，尚需中国证监会同意注册后方可实施。本次发行对象不超过35名，拟发行股票数量不超过发行前公司总股本的30%，募集资金总额不超过2.28亿元，扣除发行费用后将全部用于原料药及健康膳食补充剂生物制造基地建设项目（一期）。发行对象所认购股份自发行结束之日起六个月内不得转让。本次发行完成后，公司控股股东和实际控制人不会",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9376800.d.html"
+   },
+   {
+    "time": "2026-11-04 16:34:43",
+    "text": "瑞典央行计划通过外汇贷款为部分外汇储备提供资金。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6152706.d.html"
+   },
+   {
+    "time": "2026-11-04 16:34:06",
+    "text": "【拓新药业：2026年上半年营收2.11亿元 净亏损2796.08万元】拓新药业公告称，中泰证券担任其2026年度向特定对象发行股票的保荐机构。2026年1-6月公司实现营业收入2.11亿元，归属于母公司所有者的净亏损2796.08万元，扣非后净亏损3067.64万元。2025年度公司实现营业收入3.78亿元，归属于母公司所有者的净亏损6966.10万元。公司主要从事核苷（酸）类原料药及医药中间体研发、生产与销售，截至2026年6月30",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhks9376188.d.html"
+   },
+   {
+    "time": "2026-11-04 16:34:00",
+    "text": "【科大讯飞成立科技公司 含AI及物联网相关业务】企查查APP显示，近日，巴中科讯科技有限公司成立，法定代表人为祝伟杰，注册资本为1000万元，经营范围包含：人工智能应用软件开发；物联网技术研发；人工智能行业应用系统集成服务；教学专用仪器销售等。企查查股权穿透显示，该公司由科大讯飞间接全资持股。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6152131.d.html"
+   },
+   {
+    "time": "2026-11-04 16:33:50",
+    "text": "【恩捷股份：实控人家族成员李晓华质押595万股股份】恩捷股份公告称，公司副董事长、总经理暨实际控制人家族成员李晓华将其持有的595万股公司股份办理质押，占其所持股份比例7.37%，占公司总股本比例0.61%，质权人为华泰证券股份有限公司，质押用途为自身资金需求，质押起始日为2026年11月3日，到期日为办理解除质押登记手续之日。本次质押后，李晓华及其一致行动人合计质押股份1.80亿股，占其所持股份比例43.47%，占公司总股本比例18.",
+    "link": ""
+   },
+   {
+    "time": "2026-11-04 16:33:30",
+    "text": "【蚂蚁灵光开放生态持续扩容 已打通40项服务连接】11月4日，蚂蚁灵光迎来新一轮升级，新增播客订阅、夸克网盘、哈啰打车、麦当劳和微信读书等连接器服务，将能力延伸至信息管理、内容订阅、运动阅读及生活消费等更多日常场景。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6151801.d.html"
+   },
+   {
+    "time": "2026-11-04 16:33:13",
+    "text": "【唯科科技：公司12芯、16芯的MT插芯已实现小批量出货，目前订单占比较小】唯科科技11月4日在互动平台表示，公司12芯、16芯的MT插芯已通过GR-1435标准认证，更高芯数的插芯尚在推进中；公司12芯、16芯的MT插芯已实现小批量出货，目前订单占比较小。公司正抓紧光通讯领域需求增长的机会，进一步拓展光通讯领域市场。",
+    "link": "https://finance.sina.cn/7x24/2026-11-04/detail-inixqhku6151540.d.html"
+   }
+  ],
+  "新浪财经滚动": [
+   {
+    "title": "摩根大通：AI收入有代价，投资者应关注利润转化，上调美图评级至“增持”",
+    "link": "https://finance.sina.com.cn/tob/2026-11-04/doc-inixqhkx8050943.shtml",
+    "time": "11-04 16:38",
+    "source": "新浪财经"
+   },
+   {
+    "title": "vivo与人民日报达成影像技术战略合作，围绕真实新闻场景开展技术共创",
+    "link": "https://finance.sina.com.cn/tob/2026-11-04/doc-inixqhkz0133195.shtml",
+    "time": "11-04 16:37",
+    "source": "新浪科技"
+   },
+   {
+    "title": "集成超50个主流视频模型 虎鲸文娱“鲸锐AI”平台正式上线",
+    "link": "https://finance.sina.com.cn/tob/2026-11-04/doc-inixqhks9377584.shtml",
+    "time": "11-04 16:35",
+    "source": "新浪科技"
+   },
+   {
+    "title": "法国艺术家庆祝特朗普败选：特朗普酒店的招牌被“补”成了“特朗普下台”",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9376554.shtml",
+    "time": "11-04 16:34",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "民主党在中期选举中大获全胜后，美股期货小幅下跌，美国国债走强",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9374111.shtml",
+    "time": "11-04 16:31",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "杰富瑞维持AMD“买入”评级，目标价650美元，看好服务器CPU及AI芯片业务增长",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhku6142012.shtml",
+    "time": "11-04 16:18",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "德意志银行上调法拉利目标价至465欧元，看好高端车型需求及盈利韧性",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhkw1586235.shtml",
+    "time": "11-04 16:14",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "小摩：贝壳-W目标价上调至65港元 维持“增持”评级",
+    "link": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-04/doc-inixqhkx8034790.shtml",
+    "time": "11-04 16:11",
+    "source": "新浪港股"
+   },
+   {
+    "title": "伯恩斯坦上调苹果目标价至380美元，看好AI应用前景及智能手机市场份额增长",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhku6135925.shtml",
+    "time": "11-04 16:10",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "交银国际：荣昌生物维持“买入”评级 目标价调整至128港元",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqhks9359300.shtml",
+    "time": "11-04 16:10",
+    "source": "新浪港股"
+   },
+   {
+    "title": "百度披露Apollo World世界模型：让AI教AI开车，已全无人运营超百万公里",
+    "link": "https://finance.sina.com.cn/tob/2026-11-04/doc-inixqhks9357310.shtml",
+    "time": "11-04 16:07",
+    "source": "新浪科技"
+   },
+   {
+    "title": "港股收评：恒指涨1.67% 科指涨1.77% 科网股普涨 黄金股爆发",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqhkx8035194.shtml",
+    "time": "11-04 16:05",
+    "source": "新浪港股"
+   },
+   {
+    "title": "日本生命保险斥资789万美元增持Corebridge Financial，持股增至约1.32亿股",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9353228.shtml",
+    "time": "11-04 16:03",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "SK电讯第三季度扭亏为盈，净利润达4118亿韩元，营收同比增长13.1%",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhkw1575448.shtml",
+    "time": "11-04 16:01",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "宝马下调2026年汽车业务利润率预期至盈亏平衡附近，维持全年现金流目标",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhkw1573989.shtml",
+    "time": "11-04 16:00",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "民主党选民对妥协兴趣寥寥",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9344907.shtml",
+    "time": "11-04 15:51",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "盯美股，选新浪财经 App：行情、持仓、资讯一站直达，看懂海外资本市场",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhku6115661.shtml",
+    "time": "11-04 15:45",
+    "source": "市场资讯"
+   },
+   {
+    "title": "全球市场风云变幻，重要资讯抢先一步：新浪财经App，让全球财经动态尽在掌握",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9333901.shtml",
+    "time": "11-04 15:40",
+    "source": "市场资讯"
+   },
+   {
+    "title": "美银证券：中银航空租赁首予“买入”评级 目标价80港元",
+    "link": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-04/doc-inixqhkw1557993.shtml",
+    "time": "11-04 15:40",
+    "source": "新浪港股"
+   },
+   {
+    "title": "招商证券：从自营到平台双轮驱动 首予希音-W“强烈推荐”评级",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqhkw1556916.shtml",
+    "time": "11-04 15:39",
+    "source": "新浪港股"
+   },
+   {
+    "title": "毫秒捕捉全球脉搏 新浪财经App快讯 第一时间掌握财经先机",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqhks9331401.shtml",
+    "time": "11-04 15:38",
+    "source": "市场资讯"
+   },
+   {
+    "title": "小摩：中国AI应用收入增长伴随成本 上调美图公司至“增持”评级",
+    "link": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-11-04/doc-inixqhks9331377.shtml",
+    "time": "11-04 15:37",
+    "source": "新浪港股"
+   },
+   {
+    "title": "伊莱克斯同意将意大利裁员规模削减近半",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaau9456969.shtml",
+    "time": "11-04 15:33",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "中方如何看待美国国会中期选举？外交部回应",
+    "link": "https://finance.sina.com.cn/roll/2026-11-04/doc-inixqhkx8007552.shtml",
+    "time": "11-04 15:32",
+    "source": "环球网"
+   },
+   {
+    "title": "中期选举选民对特朗普、通胀以及国家走向深感忧虑",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6230559.shtml",
+    "time": "11-04 15:30",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "宝马在利润下滑之际加大重组力度",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaay1677383.shtml",
+    "time": "11-04 15:25",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "直线拉升！现货黄金重返4000美元/盎司",
+    "link": "https://finance.sina.com.cn/roll/2026-11-04/doc-inixqaaw6230959.shtml",
+    "time": "11-04 15:24",
+    "source": "上海证券报"
+   },
+   {
+    "title": "外交部：中方就中俄美元首会晤同相关方保持着沟通",
+    "link": "https://finance.sina.com.cn/china/2026-11-04/doc-inixqaau9453489.shtml",
+    "time": "11-04 15:23",
+    "source": "央视"
+   },
+   {
+    "title": "外交部：愿继续同美方维护好落实好两国元首重要共识",
+    "link": "https://finance.sina.com.cn/jjxw/2026-11-04/doc-inixqaay1680085.shtml",
+    "time": "11-04 15:23",
+    "source": "央视"
+   },
+   {
+    "title": "光大期货1104热点追踪：地缘缓和叠加中期选举避险，燃料油大幅回调",
+    "link": "https://finance.sina.com.cn/money/future/fmnews/2026-11-04/doc-inixqaaw6223426.shtml",
+    "time": "11-04 15:21",
+    "source": "市场资讯"
+   },
+   {
+    "title": "CrowdStrike推出AI智能体“紧急停止开关”，CEO称可立即终止失控AI",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6217777.shtml",
+    "time": "11-04 15:15",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "【市场聚焦】聚丙烯油价下行牵引成本下移",
+    "link": "https://finance.sina.com.cn/money/future/2026-11-04/doc-inixqhkz0125265.shtml",
+    "time": "11-04 15:08",
+    "source": "市场资讯"
+   },
+   {
+    "title": "埃森哲被指发布充斥AI幻觉的人工智能研究报告",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaau9433914.shtml",
+    "time": "11-04 15:07",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "收评|国内期货主力合约跌多涨少 低硫燃料油（LU）跌超6%",
+    "link": "https://finance.sina.com.cn/money/future/fmnews/2026-11-04/doc-inixqaaw6205711.shtml",
+    "time": "11-04 15:03",
+    "source": "市场资讯"
+   },
+   {
+    "title": "诺和诺德第三季度营业利润同比增长27%，Wegovy销售额远超预期",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6205461.shtml",
+    "time": "11-04 15:03",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "民主党赢得国会两院之际 伊朗议会议长称美国民众已发出“反对战争”的声音",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaz8107405.shtml",
+    "time": "11-04 15:01",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "“一场地震”：民主党大胜，德州政坛震动",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaz8106575.shtml",
+    "time": "11-04 15:00",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "诺和诺德上调全年业绩指引，Wegovy减肥药片销量表现亮眼",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaau9424361.shtml",
+    "time": "11-04 14:59",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "Evercore ISI维持苹果“跑赢大盘”评级，目标价380美元，关注AI投入及供应链采购增长",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaz8104561.shtml",
+    "time": "11-04 14:58",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "选民背弃特朗普，选票大幅转向民主党",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaau9420134.shtml",
+    "time": "11-04 14:52",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "韩国10月进口汽车销量同比飙升近30%，特斯拉连续九个月位居榜首",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6192804.shtml",
+    "time": "11-04 14:48",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "全球主要铂金精炼商贺利氏被曝系统性低报贵金属含量，涉及全球450家客户",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6190655.shtml",
+    "time": "11-04 14:45",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "兑吧午后涨超16% 短剧视频用户规模已超4亿 公司布局全链路AI短剧业务",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqaau9414073.shtml",
+    "time": "11-04 14:44",
+    "source": "新浪港股"
+   },
+   {
+    "title": "菜籽油专项分析：偏紧供需现实支撑，相较豆棕油表现扛跌",
+    "link": "https://finance.sina.com.cn/money/future/fmnews/2026-11-04/doc-inixqaaz8095941.shtml",
+    "time": "11-04 14:43",
+    "source": "市场资讯"
+   },
+   {
+    "title": "杰富瑞维持CrowdStrike“买入”评级，目标价240美元，看好AI安全业务扩张",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6188621.shtml",
+    "time": "11-04 14:42",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "美国中期选举不确定性消退，比特币V形反弹逼近78000美元",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6188459.shtml",
+    "time": "11-04 14:42",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "宝马第三季度税前利润同比下降11%",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaau9411906.shtml",
+    "time": "11-04 14:41",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "五一视界盘中涨逾17% 创始人自愿延长禁售期四年",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqaaw6187694.shtml",
+    "time": "11-04 14:41",
+    "source": "新浪港股"
+   },
+   {
+    "title": "高盛维持AMD“买入”评级，目标价700美元，看好数据中心业务持续增长",
+    "link": "https://finance.sina.com.cn/stock/usstock/c/2026-11-04/doc-inixqaaw6186763.shtml",
+    "time": "11-04 14:40",
+    "source": "环球市场播报"
+   },
+   {
+    "title": "顺丰同城午后涨逾6% 近期与顺丰控股续签合作框架协议",
+    "link": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-11-04/doc-inixqaay1642129.shtml",
+    "time": "11-04 14:38",
+    "source": "新浪港股"
+   }
+  ],
+  "东方财富公告": [
+   {
+    "title": "中国一重:公告2026-045(中国第一重型机械股份公司关于召开2026年第三季度业绩说明会的公告)",
+    "stock_code": "601106",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/601106/AN202611041831410161.html"
+   },
+   {
+    "title": "时空科技:关于业绩承诺补偿事项的公告",
+    "stock_code": "605178",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/605178/AN202611041831410160.html"
+   },
+   {
+    "title": "华统股份:关于对外担保的进展公告",
+    "stock_code": "002840",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/002840/AN202611041831410152.html"
+   },
+   {
+    "title": "芯导科技:国元证券股份有限公司关于上海芯导电子科技股份有限公司发行可转换公司债券及支付现金购买资产实施情况之独立财务顾问报告",
+    "stock_code": "688230",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/688230/AN202611041831410135.html"
+   },
+   {
+    "title": "芯导科技:上海芯导电子科技股份有限公司发行可转换公司债券及支付现金购买资产实施情况暨可转换公司债券登记完成的公告",
+    "stock_code": "688230",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/688230/AN202611041831410134.html"
+   },
+   {
+    "title": "芯导科技:上海市广发律师事务所关于上海芯导电子科技股份有限公司发行可转换公司债券及支付现金购买资产实施情况的法律意见",
+    "stock_code": "688230",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/688230/AN202611041831410133.html"
+   },
+   {
+    "title": "昂立教育:昂立教育关于参加2026年上海辖区上市公司三季报集体业绩说明会的公告",
+    "stock_code": "600661",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/600661/AN202611041831410111.html"
+   },
+   {
+    "title": "华电新能:华电新能源集团股份有限公司关于董事会秘书变更的公告",
+    "stock_code": "600930",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/600930/AN202611041831410110.html"
+   },
+   {
+    "title": "上海医药:上海医药集团股份有限公司关于曲前列尼尔二乙醇胺吸入粉雾剂获得临床试验批准通知书的公告",
+    "stock_code": "601607",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/601607/AN202611041831410015.html"
+   },
+   {
+    "title": "上海医药:上海医药集团股份有限公司关于参与设立的上海上实生物医药产业私募基金完成私募投资基金备案的公告",
+    "stock_code": "601607",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/601607/AN202611041831410014.html"
+   },
+   {
+    "title": "上海医药:上海医药集团股份有限公司控股股东增持股份计划公告",
+    "stock_code": "601607",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/601607/AN202611041831410013.html"
+   },
+   {
+    "title": "益丰药房:益丰药房关于使用闲置募集资金进行现金管理的进展公告",
+    "stock_code": "113583",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/113583/AN202611041831410012.html"
+   },
+   {
+    "title": "丰山集团:关于“丰山转债”预计满足转股价格修正条件的提示性公告",
+    "stock_code": "113649",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/113649/AN202611041831410011.html"
+   },
+   {
+    "title": "思瑞浦:2026年第四次临时股东会会议资料",
+    "stock_code": "118500",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/118500/AN202611041831410010.html"
+   },
+   {
+    "title": "ST嘉必优:嘉必优生物技术(武汉)股份有限公司关于诉讼进展的公告",
+    "stock_code": "688089",
+    "date": "2026-11-05",
+    "link": "https://data.eastmoney.com/notices/detail/688089/AN202611041831409979.html"
+   }
+  ],
+  "官方公告-汇金增持": [
+   {
+    "title": "关于现金收购东莞市春草研磨科技有限公司100%股权的公告",
+    "sec_name": "汇创达",
+    "date": "2026-11-03",
+    "url": "http://static.cninfo.com.cn/finalpage/2026-11-03/1225654134.PDF",
+    "source": "巨潮资讯"
+   },
+   {
+    "title": "上海精诚磐明（横琴）律师事务所关于珠海汇金科技股份有限公司2026年第一次临时股东会的法律意见书",
+    "sec_name": "汇金科技",
+    "date": "2026-11-02",
+    "url": "http://static.cninfo.com.cn/finalpage/2026-11-02/1225654023.PDF",
+    "source": "巨潮资讯"
+   },
+   {
+    "title": "2026年第一次临时股东会决议公告",
+    "sec_name": "汇金科技",
+    "date": "2026-11-02",
+    "url": "http://static.cninfo.com.cn/finalpage/2026-11-02/1225654022.PDF",
+    "source": "巨潮资讯"
+   }
+  ],
+  "官方公告-份额变动": []
+ }
+}
