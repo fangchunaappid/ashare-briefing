@@ -28,6 +28,31 @@ HEADERS = {
     )
 }
 DATA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SNAPSHOT_PATH = os.path.join(DATA_DIR, "output", "etf_shares.json")
+
+def _load_share_snapshot():
+    """读取最近一次 ETF 份额快照（由 workflow 的 Actions 缓存跨日恢复）。"""
+    try:
+        with open(SNAPSHOT_PATH, "r", encoding="utf-8") as fh:
+            return json.load(fh)
+    except Exception:
+        return {}
+
+def _save_share_snapshot(etfs):
+    """把今日份额快照写入 output/，由 workflow 缓存步骤持久化到下次运行。"""
+    try:
+        os.makedirs(os.path.dirname(SNAPSHOT_PATH), exist_ok=True)
+        snap = {}
+        for row in etfs or []:
+            if row.get("_secid") and row.get("fund_total_shares"):
+                snap[row["_secid"]] = {"fund_total_shares": row["fund_total_shares"],
+                                       "name": row.get("name")}
+        with open(SNAPSHOT_PATH, "w", encoding="utf-8") as fh:
+            json.dump(snap, fh, ensure_ascii=False, indent=1)
+        return True
+    except Exception as e:
+        print("[快照] ETF份额快照写入失败: %s" % e)
+        return False
 
 # 沪深300ETF、中证500ETF、上证50ETF、中证1000ETF（国家队常用宽基ETF）
 NATIONAL_ETFS = [("sh510300", "1.510300"), ("sh510500", "1.510500"),
@@ -117,14 +142,14 @@ def _em_json(path):
     """push2/push2delay 双域名互备 × 3 轮重试（东财偶发整站 502）。"""
     import time as _t
     last = None
-    for round_ in range(3):
+    for round_ in range(4):
         for host in ("push2.eastmoney.com", "push2delay.eastmoney.com"):
             try:
                 return json.loads(http_get("https://%s%s" % (host, path)))
             except Exception as e:  # noqa: BLE001
                 last = e
-        if round_ < 2:
-            _t.sleep(2 * (round_ + 1))
+        if round_ < 3:
+            _t.sleep((2, 5, 8)[round_])
     raise last
 
 
@@ -319,6 +344,8 @@ def google_news(query, n=6):
 def collect():
     today = datetime.now(TZ).strftime("%Y-%m-%d")
     data = {"date": today, "fetch_time": datetime.now(TZ).isoformat(), "status": {}}
+    ETF_SHARES_PREV = _load_share_snapshot()
+    print("[快照] 已加载 ETF 份额历史快照（%d 只）" % len(ETF_SHARES_PREV))
 
     def status(name, ok, note=""):
         data["status"][name] = ("ok" if ok else "失败") + (("(%s)" % note) if note else "")
@@ -393,6 +420,7 @@ def collect():
         etfs = []
         for tcode, secid in NATIONAL_ETFS:
             row = dict(etf_quotes.get(tcode) or {"name": tcode})
+            row["_secid"] = secid
             try:
                 bars = daily_kline(tcode, 6)
                 if len(bars) >= 2:
@@ -408,11 +436,51 @@ def collect():
                 row["fund_total_shares"] = to_num(extra.get("f84"))  # ETF总份额(份)
             except Exception:
                 pass
+            # 份额变化：今日份额与最近一次快照（Actions 缓存跨日持久化）的差额
+            try:
+                prev_shares = (ETF_SHARES_PREV or {}).get(secid, {}).get("fund_total_shares")
+                if row.get("fund_total_shares") and prev_shares:
+                    row["fund_total_shares_prev"] = prev_shares
+                    row["fund_share_change"] = round(row["fund_total_shares"] - prev_shares, 0)
+            except Exception:
+                pass
             etfs.append(row)
         data["国家队宽基ETF"] = etfs
         status("宽基ETF", True)
     except Exception as e:
         status("宽基ETF", False, str(e)[:80])
+
+    # 5.5) 东财关键板块失败时的补采（EM 偶发整站 502，等 60 秒再垫一轮）
+    _retry_targets = [k for k in ("板块数据", "个股资金") if str(data["status"].get(k, "")).startswith("失败")]
+    _shares_missing = all(not (r or {}).get("fund_total_shares") for r in data.get("国家队宽基ETF", []) or [])
+    if _retry_targets or _shares_missing:
+        print("[补采] 东财关键数据缺失(%s%s)，等待60秒后重试一轮"
+              % (",".join(_retry_targets), "，ETF份额" if _shares_missing else ""))
+        time.sleep(60)
+        for k in _retry_targets:
+            try:
+                if k == "板块数据":
+                    data["行业板块领涨"] = em_boards("industry", po=1)
+                    data["行业板块领跌"] = em_boards("industry", po=0)
+                    data["概念板块领涨"] = em_boards("concept", po=1)
+                else:
+                    data["涨幅榜"] = em_stock_rank("f3")
+                    data["成交额榜"] = em_stock_rank("f6")
+                    data["大盘资金与涨跌家数"] = em_market_overview()
+                data["status"][k] = "ok(60s补采成功)"
+            except Exception as e:
+                data["status"][k] = "失败(60s补采后仍失败: %s)" % str(e)[:60]
+        if _shares_missing:
+            for row in data.get("国家队宽基ETF", []):
+                if row.get("fund_total_shares"):
+                    continue
+                try:
+                    extra = em_stock_extra(row.get("_secid") or "", "f84")
+                    row["fund_total_shares"] = to_num(extra.get("f84"))
+                except Exception:
+                    pass
+            data["status"]["宽基ETF"] = "ok(60s补采后%s)" % ("部分恢复" if any(
+                r.get("fund_total_shares") for r in data.get("国家队宽基ETF", [])) else "仍无份额")
 
     # 6) 电解铝：期货价格、LME、板块个股
     fut = None
@@ -490,6 +558,10 @@ def collect():
         news["东方财富公告"] = []
         status("公告", False, str(e)[:60])
     data["news"] = news
+
+    if data.get("国家队宽基ETF"):
+        if _save_share_snapshot(data["国家队宽基ETF"]):
+            data["status"]["ETF份额快照"] = "ok"
 
     return data
 
