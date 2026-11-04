@@ -6,6 +6,7 @@
 - 腾讯行情 qt.gtimg.cn / web.ifzq.gtimg.cn（指数、ETF、铝板块个股、K线）
 - 东方财富 push2.eastmoney.com / np-anotice-stock.eastmoney.com（板块、个股榜、大盘资金、ETF份额、公告、期货）、
   np-listapi 滚动要闻（新闻池补充源）
+- 上交所官网 sse.com.cn 基金基本信息页（ETF总份额官方口径，东财缺失时的备用源）
 - 新浪财经 hq.sinajs.cn / zhibo.sina.com.cn（LME铝、沪铝备用源、7x24快讯、完整行情与板块/个股榜备用源）
 - 华尔街见闻 api-one.wallstcn.com（A股7x24快讯备用源）
 - Google News RSS（新闻检索，含原文链接）
@@ -17,6 +18,7 @@ import os
 import re
 import time
 import urllib.parse
+from html import unescape as _html_unescape
 from datetime import datetime, timedelta, timezone
 from xml.etree import ElementTree as ET
 
@@ -56,9 +58,9 @@ def _save_share_snapshot(etfs):
         print("[快照] ETF份额快照写入失败: %s" % e)
         return False
 
-# 沪深300ETF、中证500ETF、上证50ETF、中证1000ETF（国家队常用宽基ETF）
+# 沪深300ETF、中证500ETF、上证50ETF、中证1000ETF（国家队常用宽基ETF，均为沪市上市）
 NATIONAL_ETFS = [("sh510300", "1.510300"), ("sh510500", "1.510500"),
-                 ("sh510050", "1.510050"), ("sh512100", "0.512100")]
+                 ("sh510050", "1.510050"), ("sh512100", "1.512100")]
 ALUMINUM_STOCKS = "sh601600,sz000807,sz000933,sz002532"  # 中国铝业/云铝股份/神火股份/天山铝业
 
 
@@ -300,6 +302,33 @@ def em_roll_news(n=30):
             "source": it.get("mediaName") or "",
         })
     return out
+
+
+# ---------------------------------------------------------------- 上交所官网
+def sse_fund_shares(code):
+    """上交所官网「基金基本信息」页的基金规模表（总份额，万份，清算后日频，官方口径）。
+
+    仅适用沪市基金；页面为服务端渲染 HTML。返回 {"date","name","shares"(份),"shares_yi"}。
+    """
+    page = http_get("https://www.sse.com.cn/assortment/fund/list/etfinfo/basic/index.shtml?FUNDID=%s" % code,
+                    referer="https://www.sse.com.cn/")
+    scope = page.split("基金规模", 1)[-1]
+    rows = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", scope, re.S):
+        cells = [_html_unescape(re.sub(r"<[^>]+>|\s+", "", c))
+                 for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S)]
+        if len(cells) < 4:
+            continue
+        if (re.fullmatch(r"\d{4}-\d{2}-\d{2}", cells[0] or "")
+                and (cells[1] or "").strip() == str(code)
+                and to_num((cells[3] or "").replace(",", ""))):
+            rows.append(cells)
+    if not rows:
+        raise RuntimeError("上交所页面未解析到份额")
+    rows.sort(key=lambda r: r[0], reverse=True)
+    date, name, wan = rows[0][0], rows[0][2], rows[0][3]
+    shares = to_num(wan.replace(",", "")) * 1e4  # 万份 -> 份
+    return {"date": date, "name": name, "shares": shares, "shares_yi": round(shares / 1e8, 2)}
 
 
 # ---------------------------------------------------------------- 新浪
@@ -579,8 +608,18 @@ def collect():
             try:
                 extra = em_stock_extra(secid, "f58,f84")
                 row["fund_total_shares"] = to_num(extra.get("f84"))  # ETF总份额(份)
+                row["_shares_src"] = "东财"
             except Exception:
                 pass
+            if not row.get("fund_total_shares"):
+                try:  # 东财缺失时改用上交所官网「基金规模」（清算后口径，沪市基金）
+                    sse = sse_fund_shares(tcode[2:])
+                    row["fund_total_shares"] = sse["shares"]
+                    row["_shares_src"] = "上交所%s" % sse["date"]
+                except Exception:
+                    pass
+            if row.get("fund_total_shares"):
+                row["fund_total_shares_yi"] = round(row["fund_total_shares"] / 1e8, 2)
             # 份额变化：今日份额与最近一次快照（Actions 缓存跨日持久化）的差额
             try:
                 prev_shares = (ETF_SHARES_PREV or {}).get(secid, {}).get("fund_total_shares")
@@ -623,8 +662,19 @@ def collect():
                 try:
                     extra = em_stock_extra(row.get("_secid") or "", "f84")
                     row["fund_total_shares"] = to_num(extra.get("f84"))
+                    row["_shares_src"] = "东财(60s补采)"
                 except Exception:
                     pass
+                if not row.get("fund_total_shares"):
+                    try:  # 上交所官网兜底（清算后口径）
+                        tcode = (row.get("code") or row.get("_secid") or "")[-6:]
+                        sse = sse_fund_shares(tcode)
+                        row["fund_total_shares"] = sse["shares"]
+                        row["_shares_src"] = "上交所%s(60s补采)" % sse["date"]
+                    except Exception:
+                        pass
+                if row.get("fund_total_shares"):
+                    row["fund_total_shares_yi"] = round(row["fund_total_shares"] / 1e8, 2)
             data["status"]["宽基ETF"] = "ok(60s补采后%s)" % ("部分恢复" if any(
                 r.get("fund_total_shares") for r in data.get("国家队宽基ETF", [])) else "仍无份额")
 
