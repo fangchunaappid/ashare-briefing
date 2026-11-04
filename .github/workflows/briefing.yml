@@ -71,10 +71,11 @@ jobs:
 
       # 数据沉淀：当日 data.json 归档到 data 分支（文件按日期命名，可回溯趋势）
       - name: 归档当日数据到 data 分支
-        if: ${{ steps.sent.outputs.cache-hit != 'true' && hashFiles('data.json') != '' }}
+        if: steps.sent.outputs.cache-hit != 'true'
         env:
           TODAY: ${{ steps.bjdate.outputs.today }}
         run: |
+          if [ ! -f data.json ]; then echo "data.json 不存在，跳过归档"; exit 0; fi
           git config user.name "ashare-archive-bot"
           git config user.email "actions@users.noreply.github.com"
           git fetch origin data 2>/dev/null && git checkout -B data origin/data || git checkout --orphan data
