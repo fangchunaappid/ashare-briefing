@@ -20,6 +20,7 @@ from datetime import datetime, timedelta, timezone
 from xml.etree import ElementTree as ET
 
 import requests
+from html import unescape as _html_unescape
 
 try:
     import akshare as _ak
@@ -63,7 +64,7 @@ def _save_share_snapshot(etfs):
 
 # 沪深300ETF、中证500ETF、上证50ETF、中证1000ETF（国家队常用宽基ETF）
 NATIONAL_ETFS = [("sh510300", "1.510300"), ("sh510500", "1.510500"),
-                 ("sh510050", "1.510050"), ("sh512100", "0.512100")]
+                 ("sh510050", "1.510050"), ("sh512100", "1.512100")]
 ALUMINUM_STOCKS = "sh601600,sz000807,sz000933,sz002532"  # 中国铝业/云铝股份/神火股份/天山铝业
 
 
@@ -142,6 +143,50 @@ def daily_kline(code, n=6):
         return tencent_kline_dates_and_volume(code, n)
     except Exception:
         return sina_daily_kline(code, n)
+
+
+def sina_full_quotes(codes):
+    """新浪完整行情（腾讯行情失败时的备用源，指数/ETF/个股通用）。
+
+    字段: 0名称 1今开 2昨收 3最新 4最高 5最低 ... 8成交量 9成交额(元) 30日期 31时间
+    """
+    raw = http_get("https://hq.sinajs.cn/list=" + ",".join(codes),
+                   referer="https://finance.sina.com.cn", is_gbk=True)
+    out = {}
+    for m in re.finditer(r'hq_str_(\w+)="([^"]*)"', raw):
+        key, f = m.group(1), m.group(2).split(",")
+        if len(f) < 32 or to_num(f[3]) is None:
+            continue
+        price, prev = to_num(f[3]), to_num(f[2])
+        amt = to_num(f[9])
+        out[key] = {
+            "name": f[0],
+            "price": price,
+            "prev_close": prev,
+            "open": to_num(f[1]),
+            "change": round(price - prev, 3) if price is not None and prev is not None else None,
+            "change_pct": round((price / prev - 1) * 100, 2) if price and prev else None,
+            "high": to_num(f[4]),
+            "low": to_num(f[5]),
+            "amount_yuan": amt,
+            "amount_yi": round(amt / 1e8, 1) if amt else None,
+            "quote_time": (f[30] + f[31]).replace("-", "").replace(":", "") if len(f) > 31 else "",
+        }
+    return out
+
+
+def stock_quotes(codes):
+    """行情统一入口：腾讯为主，新浪完整行情兜底。返回 (quotes, 来源名)。"""
+    try:
+        q = tencent_quotes(",".join(codes))
+        if q:
+            return q, "腾讯"
+    except Exception:
+        pass
+    return sina_full_quotes(list(codes)), "新浪"
+
+
+# ---------------------------------------------------------------- 东方财富
 
 
 # ---------------------------------------------------------------- 东方财富
@@ -245,6 +290,52 @@ def em_notices(n=15):
                     if art else "",
         })
     return out
+
+
+def em_roll_news(n=30):
+    """东财滚动要闻（新闻池补充源，带原文链接）。"""
+    url = ("https://np-listapi.eastmoney.com/comm/web/getNewsByColumns"
+           "?client=web&biz=web_news_col&column=350&order=1&needInteractData=0"
+           "&page_index=1&page_size=%d&req_trace=%d" % (n, int(time.time() * 1000)))
+    j = json.loads(http_get(url))
+    rows = ((j.get("data") or {}).get("list")) or []
+    out = []
+    for it in rows:
+        link = it.get("uniqueUrl") or it.get("url") or ""
+        out.append({
+            "title": it.get("title") or "",
+            "link": link,
+            "time": (it.get("showTime") or "")[:16],
+            "source": it.get("mediaName") or "",
+        })
+    return out
+
+
+# ---------------------------------------------------------------- 上交所官网
+def sse_fund_shares(code):
+    """上交所官网「基金基本信息」页的基金规模表（总份额，万份，清算后日频，官方口径）。
+
+    仅适用沪市基金；页面为服务端渲染 HTML。返回 {"date","name","shares"(份),"shares_yi"}。
+    """
+    page = http_get("https://www.sse.com.cn/assortment/fund/list/etfinfo/basic/index.shtml?FUNDID=%s" % code,
+                    referer="https://www.sse.com.cn/")
+    scope = page.split("基金规模", 1)[-1]
+    rows = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", scope, re.S):
+        cells = [_html_unescape(re.sub(r"<[^>]+>|\s+", "", c))
+                 for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S)]
+        if len(cells) < 4:
+            continue
+        if (re.fullmatch(r"\d{4}-\d{2}-\d{2}", cells[0] or "")
+                and (cells[1] or "").strip() == str(code)
+                and to_num((cells[3] or "").replace(",", ""))):
+            rows.append(cells)
+    if not rows:
+        raise RuntimeError("上交所页面未解析到份额")
+    rows.sort(key=lambda r: r[0], reverse=True)
+    date, name, wan = rows[0][0], rows[0][2], rows[0][3]
+    shares = to_num(wan.replace(",", "")) * 1e4  # 万份 -> 份
+    return {"date": date, "name": name, "shares": shares, "shares_yi": round(shares / 1e8, 2)}
 
 
 # ---------------------------------------------------------------- 新浪
@@ -410,6 +501,75 @@ def sina_roll_news(n=50):
     return out
 
 
+def sina_boards(kind):
+    """新浪板块列表（东财板块接口失败时的备用源）。kind: industry=行业 / concept=概念。
+
+    返回按涨跌幅降序的完整列表（无主力资金字段，记为 None）。
+    字段: 0代码 1名称 2家数 3平均价 4涨跌额 5涨跌幅 6成交量 7成交额 8领涨股代码
+          9领涨股涨跌幅 10领涨股价 11领涨股涨跌额 12领涨股名称
+    """
+    url = ("https://money.finance.sina.com.cn/q/view/newSinaHy.php" if kind == "industry"
+           else "https://money.finance.sina.com.cn/q/view/newFLJK.php?param=class")
+    raw = http_get(url, is_gbk=True)
+    rows = []
+    for m in re.finditer(r'"(\w+)":"([^"]+)"', raw):
+        f = m.group(2).split(",")
+        if len(f) < 13 or to_num(f[5]) is None:
+            continue
+        rows.append({
+            "name": f[1],
+            "change_pct": to_num(f[5]),
+            "main_inflow_yuan": None,
+            "main_inflow_yi": None,
+            "leader_stock": f[12],
+            "leader_change_pct": to_num(f[9]),
+        })
+    rows.sort(key=lambda r: r["change_pct"] or 0, reverse=True)
+    return rows
+
+
+def sina_stock_rank(sort_field, pz=10):
+    """新浪个股排行（东财个股榜失败时的备用源）。sort_field: f3=涨幅榜 f6=成交额榜。"""
+    sort = "changepercent" if sort_field == "f3" else "amount"
+    url = ("https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/"
+           "Market_Center.getHQNodeData?page=1&num=%d&sort=%s&asc=0&node=hs_a" % (pz, sort))
+    rows = json.loads(http_get(url)) or []
+    out = []
+    for r in rows:
+        amt = to_num(r.get("amount"))
+        out.append({
+            "code": r.get("code"),
+            "name": r.get("name"),
+            "price": to_num(r.get("trade")),
+            "change_pct": to_num(r.get("changepercent")),
+            "volume": to_num(r.get("volume")),
+            "amount_yuan": amt,
+            "amount_yi": round(amt / 1e8, 1) if amt else None,
+        })
+    return out
+
+
+# ---------------------------------------------------------------- 华尔街见闻
+def wallstreetcn_lives(n=30):
+    """华尔街见闻A股频道7x24快讯（新浪7x24失败时的备用源）。"""
+    j = json.loads(http_get("https://api-one.wallstcn.com/apiv1/content/lives"
+                            "?channel=a-stock-channel&limit=%d" % n))
+    items = ((j.get("data") or {}).get("items")) or []
+    out = []
+    for it in items:
+        ts = it.get("display_time")
+        out.append({
+            "time": datetime.fromtimestamp(int(ts), TZ).strftime("%m-%d %H:%M")
+                    if ts and str(ts).isdigit() else "",
+            "text": re.sub(r"<[^>]+>", "", it.get("content") or "")[:220],
+            "link": "",
+        })
+    return out
+
+
+# ---------------------------------------------------------------- 新闻RSS
+
+
 # ---------------------------------------------------------------- 新闻RSS
 def google_news(query, n=6):
     url = ("https://news.google.com/rss/search?q=" + urllib.parse.quote(query)
@@ -463,16 +623,17 @@ def collect():
         return data
 
     # 1.5) 收盘校验：指数快照时间必须为今日且 >= 15:00，否则视为盘中，静默结束
+    #      （腾讯行情不可用时改用新浪完整行情的日期时间）
     try:
-        q = tencent_quotes("sh000001").get("sh000001") or {}
-        qt = q.get("quote_time") or ""
-        if not (qt[:8] == today.replace("-", "") and qt[8:14] >= "150000"):
+        q, _src = stock_quotes(["sh000001"])
+        qt = (q.get("sh000001") or {}).get("quote_time") or ""
+        if qt and not (qt[:8] == today.replace("-", "") and qt[8:14] >= "150000"):
             data["trading_day"] = "盘中/快照未收盘(%s)" % qt
             return data
     except Exception:
         pass  # 校验失败不拦截，以K线交易日判断为准
 
-    # 2) 指数与两市成交额（AkShare 官方源主用，腾讯兜底）
+    # 2) 指数与两市成交额（AkShare 官方源主用；腾讯兜底；腾讯失败时新浪完整行情兜底）
     _akq = None
     if AK_OK:
         try:
@@ -481,8 +642,11 @@ def collect():
         except Exception as e:
             status("指数行情(akshare)", False, str(e)[:60])
     try:
-        q = tencent_quotes("sh000001,sz399001,sz399006,sz399106")
-        sh, sz, cyb, szc = q.get("sh000001"), q.get("sz399001"), q.get("sz399006"), q.get("sz399106")
+        try:
+            q = tencent_quotes("sh000001,sz399001,sz399006,sz399106")
+        except Exception:
+            q = sina_full_quotes(["sh000001", "sz399001", "sz399006", "sz399106"])
+        sh, sz, cyb = q.get("sh000001"), q.get("sz399001"), q.get("sz399006")
         if _akq:
             sh = _akq.get("000001") or sh
             sz = _akq.get("399001") or sz
@@ -497,27 +661,43 @@ def collect():
     except Exception as e:
         status("指数行情", False, str(e)[:80])
 
-    # 3) 板块热点（东财行业+概念，涨跌幅排序）
+    # 3) 板块热点（东财行业+概念，涨跌幅排序；失败时改用新浪板块，无主力资金字段）
     try:
         data["行业板块领涨"] = em_boards("industry", po=1)
         data["行业板块领跌"] = em_boards("industry", po=0)
         data["概念板块领涨"] = em_boards("concept", po=1)
         status("板块数据", True)
     except Exception as e:
-        status("板块数据", False, str(e)[:80])
+        try:
+            ind, con = sina_boards("industry"), sina_boards("concept")
+            data["行业板块领涨"] = ind[:8]
+            data["行业板块领跌"] = list(reversed(ind[-8:]))
+            data["概念板块领涨"] = con[:8]
+            status("板块数据", True, "新浪备用源(无主力资金)")
+        except Exception as e2:
+            status("板块数据", False, (str(e)[:40] + "|新浪:" + str(e2)[:40]))
 
-    # 4) 个股与资金
+    # 4) 个股榜与大盘资金（个股榜失败时改用新浪排行；大盘资金仅东财有公开接口）
     try:
         data["涨幅榜"] = em_stock_rank("f3")
         data["成交额榜"] = em_stock_rank("f6")
-        data["大盘资金与涨跌家数"] = em_market_overview()
         status("个股资金", True)
     except Exception as e:
-        status("个股资金", False, str(e)[:80])
+        try:
+            data["涨幅榜"] = sina_stock_rank("f3")
+            data["成交额榜"] = sina_stock_rank("f6")
+            status("个股资金", True, "新浪备用源")
+        except Exception as e2:
+            status("个股资金", False, (str(e)[:40] + "|新浪:" + str(e2)[:40]))
+    try:
+        data["大盘资金与涨跌家数"] = em_market_overview()
+        status("大盘资金", True)
+    except Exception as e:
+        status("大盘资金", False, str(e)[:80])
 
     # 5) 国家队宽基ETF：行情+近5日均量对比+份额（东财f84总股本即基金份额）
     try:
-        etf_quotes = tencent_quotes(",".join(c for c, _ in NATIONAL_ETFS))
+        etf_quotes, _src = stock_quotes([c for c, _ in NATIONAL_ETFS])
         etfs = []
         for tcode, secid in NATIONAL_ETFS:
             row = dict(etf_quotes.get(tcode) or {"name": tcode})
@@ -535,8 +715,18 @@ def collect():
             try:
                 extra = em_stock_extra(secid, "f58,f84")
                 row["fund_total_shares"] = to_num(extra.get("f84"))  # ETF总份额(份)
+                row["_shares_src"] = "东财"
             except Exception:
                 pass
+            if not row.get("fund_total_shares"):
+                try:  # 东财缺失时改用上交所官网「基金规模」（清算后口径，沪市基金）
+                    sse = sse_fund_shares(tcode[2:])
+                    row["fund_total_shares"] = sse["shares"]
+                    row["_shares_src"] = "上交所%s" % sse["date"]
+                except Exception:
+                    pass
+            if row.get("fund_total_shares"):
+                row["fund_total_shares_yi"] = round(row["fund_total_shares"] / 1e8, 2)
             # 份额变化：今日份额与最近一次快照（Actions 缓存跨日持久化）的差额
             try:
                 prev_shares = (ETF_SHARES_PREV or {}).get(secid, {}).get("fund_total_shares")
@@ -552,7 +742,7 @@ def collect():
         status("宽基ETF", False, str(e)[:80])
 
     # 5.5) 东财关键板块失败时的补采（EM 偶发整站 502，等 60 秒再垫一轮）
-    _retry_targets = [k for k in ("板块数据", "个股资金") if str(data["status"].get(k, "")).startswith("失败")]
+    _retry_targets = [k for k in ("板块数据", "个股资金", "大盘资金") if str(data["status"].get(k, "")).startswith("失败")]
     _shares_missing = all(not (r or {}).get("fund_total_shares") for r in data.get("国家队宽基ETF", []) or [])
     if _retry_targets or _shares_missing:
         print("[补采] 东财关键数据缺失(%s%s)，等待60秒后重试一轮"
@@ -564,9 +754,10 @@ def collect():
                     data["行业板块领涨"] = em_boards("industry", po=1)
                     data["行业板块领跌"] = em_boards("industry", po=0)
                     data["概念板块领涨"] = em_boards("concept", po=1)
-                else:
+                elif k == "个股资金":
                     data["涨幅榜"] = em_stock_rank("f3")
                     data["成交额榜"] = em_stock_rank("f6")
+                else:
                     data["大盘资金与涨跌家数"] = em_market_overview()
                 data["status"][k] = "ok(60s补采成功)"
             except Exception as e:
@@ -588,8 +779,19 @@ def collect():
                 try:
                     extra = em_stock_extra(row.get("_secid") or "", "f84")
                     row["fund_total_shares"] = to_num(extra.get("f84"))
+                    row["_shares_src"] = "东财(60s补采)"
                 except Exception:
                     pass
+                if not row.get("fund_total_shares"):
+                    try:  # 上交所官网兜底（清算后口径）
+                        tcode = (row.get("code") or row.get("_secid") or "")[-6:]
+                        sse = sse_fund_shares(tcode)
+                        row["fund_total_shares"] = sse["shares"]
+                        row["_shares_src"] = "上交所%s(60s补采)" % sse["date"]
+                    except Exception:
+                        pass
+                if row.get("fund_total_shares"):
+                    row["fund_total_shares_yi"] = round(row["fund_total_shares"] / 1e8, 2)
             data["status"]["宽基ETF"] = "ok(60s补采后%s)" % ("部分恢复" if any(
                 r.get("fund_total_shares") for r in data.get("国家队宽基ETF", [])) else "仍无份额")
 
@@ -626,7 +828,7 @@ def collect():
     except Exception as e:
         status("LME铝", False, str(e)[:80])
     try:
-        data["铝板块个股"] = list(tencent_quotes(ALUMINUM_STOCKS).values())
+        data["铝板块个股"] = list(stock_quotes(ALUMINUM_STOCKS.split(","))[0].values())
         status("铝个股", True)
     except Exception as e:
         status("铝个股", False, str(e)[:80])
@@ -664,8 +866,12 @@ def collect():
         news["新浪7x24快讯"] = sina_7x24()
         status("新浪7x24", True)
     except Exception as e:
-        news["新浪7x24快讯"] = []
-        status("新浪7x24", False, str(e)[:60])
+        try:  # 新浪7x24不可用时改用华尔街见闻A股频道
+            news["新浪7x24快讯"] = wallstreetcn_lives()
+            status("新浪7x24", True, "华尔街见闻备用源")
+        except Exception as e2:
+            news["新浪7x24快讯"] = []
+            status("新浪7x24", False, (str(e)[:40] + "|见闻:" + str(e2)[:40]))
     try:
         news["新浪财经滚动"] = sina_roll_news()
         status("新浪滚动", True)
@@ -678,6 +884,12 @@ def collect():
     except Exception as e:
         news["东方财富公告"] = []
         status("公告", False, str(e)[:60])
+    try:
+        news["东财滚动要闻"] = em_roll_news()
+        status("东财滚动", True)
+    except Exception as e:
+        news["东财滚动要闻"] = []
+        status("东财滚动", False, str(e)[:60])
     # 巨潮资讯官方公告（证监会指定信披平台，国家队动向的权威依据）
     try:
         news["官方公告-汇金增持"] = cninfo_announcements("汇金")
