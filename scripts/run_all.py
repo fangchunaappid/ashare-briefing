@@ -21,6 +21,13 @@ def main():
     data = fetch_data.collect()
     print("数据源状态:", json.dumps(data.get("status", {}), ensure_ascii=False))
 
+    # 数据沉淀：当日原始数据落盘（归档到 data 分支，可回溯趋势）
+    try:
+        with open("data.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=1)
+    except Exception as e:
+        print("[归档] data.json 写盘失败:", e)
+
     if data.get("trading_day") is not True:
         # 无法确认当日开市（含节假日、休市、数据源故障）一律静默结束，不发送任何内容
         print("非交易日或无法确认开市（%s），按规则静默结束，不推送。" % data.get("trading_day"))
