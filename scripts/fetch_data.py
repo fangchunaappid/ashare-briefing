@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 """采集A股收盘简报所需数据，输出 data.json。
 
-数据源：
-- 腾讯行情 qt.gtimg.cn / web.ifzq.gtimg.cn（指数、ETF、铝板块个股、K线）
-- 东方财富 push2.eastmoney.com / np-anotice-stock.eastmoney.com（板块、个股榜、大盘资金、ETF份额、公告、期货）
-- 新浪财经 hq.sinajs.cn / zhibo.sina.com.cn（LME铝、沪铝备用源、7x24快讯）
-- Google News RSS（新闻检索，含原文链接）
+数据源（分层）：
+- AkShare（主源，社区维护的聚合库：官方指数/板块/资金/库存，接口变更由其发版适配）
+- 腾讯行情 qt.gtimg.cn（ETF放量检测独立源、K线，与 AkShare 交叉验证）
+- 东方财富 push2（兜底源：AkShare 失败时启用，带双域名重试）
+- 巨潮资讯 www.cninfo.com.cn（官方公告，证监会指定信披平台）
+- 新浪财经 / Google News RSS（快讯与新闻检索）
 
 任一数据源失败不影响整体，缺失项记为 None 并在 status 中说明，由简报生成环节如实处理。
 """
@@ -19,6 +20,12 @@ from datetime import datetime, timedelta, timezone
 from xml.etree import ElementTree as ET
 
 import requests
+
+try:
+    import akshare as _ak
+    AK_OK = True
+except Exception:
+    _ak, AK_OK = None, False
 
 TZ = timezone(timedelta(hours=8))  # Asia/Shanghai
 HEADERS = {
@@ -287,6 +294,51 @@ def sina_shfe_aluminum_fallback():
             "open_interest": to_num(p[13]), "quote_date": p[17]}
 
 
+# ============================== AkShare 主源 ==============================
+def ak_index_quotes():
+    """AkShare：沪深重要指数收盘行情（官方源，含成交额）。"""
+    df = _ak.stock_zh_index_spot_em(symbol="沪深重要指数")
+    out = {}
+    for _, r in df.iterrows():
+        code = str(r.get("代码") or "")
+        out[code] = {
+            "name": r.get("名称"),
+            "price": to_num(r.get("最新价")),
+            "change": to_num(r.get("涨跌额")),
+            "change_pct": to_num(r.get("涨跌幅")),
+            "amount_yuan": to_num(r.get("成交额")),
+        }
+    return out
+
+def ak_inventory():
+    """AkShare：沪铝仓单（上期所周度/日度）+ LME 库存报告。真实库存数据。"""
+    inv = {}
+    try:
+        df = _ak.futures_inventory_99(exchange="上海期货交易所", symbol="铝")
+        if df is not None and len(df):
+            inv["沪铝仓单_上期所"] = df.tail(3).to_dict("records")
+    except Exception as e:
+        inv["沪铝仓单_错误"] = str(e)[:60]
+    try:
+        df = _ak.macro_euro_lme_stock()
+        if df is not None and len(df):
+            cols = [c for c in ("日期", "铝") if c in df.columns] or list(df.columns[:2])
+            inv["LME铝库存_报告"] = df[cols].tail(2).to_dict("records")
+    except Exception as e:
+        inv["LME库存_错误"] = str(e)[:60]
+    return inv
+
+def ak_boards():
+    """AkShare：行业板块行情（东财源，作为手写接口的第三层兜底）。"""
+    df = _ak.stock_board_industry_name_em()
+    df = df.sort_values("涨跌幅", ascending=False)
+    def _rows(d):
+        return [{"板块": r.get("板块名称"), "涨跌幅": to_num(r.get("涨跌幅")),
+                 "领涨股": r.get("领涨股票"), "领涨股涨跌": to_num(r.get("领涨股票-涨跌幅"))}
+                for _, r in d.head(8).iterrows()]
+    top, bottom = _rows(df), _rows(df.sort_values("涨跌幅").head(8))
+    return {"行业板块领涨": top, "行业板块领跌": bottom}
+
 def cninfo_announcements(searchkey, days=3, n=8):
     """巨潮资讯网官方公告检索（证监会指定信息披露平台）。
     返回 [{title, sec_name, date, url}]，url 为官方 PDF 原文链接。"""
@@ -420,10 +472,21 @@ def collect():
     except Exception:
         pass  # 校验失败不拦截，以K线交易日判断为准
 
-    # 2) 指数与两市成交额（腾讯：上证指数含沪市总额，深证成指含深市总额）
+    # 2) 指数与两市成交额（AkShare 官方源主用，腾讯兜底）
+    _akq = None
+    if AK_OK:
+        try:
+            _akq = ak_index_quotes()
+            status("指数行情(akshare)", True)
+        except Exception as e:
+            status("指数行情(akshare)", False, str(e)[:60])
     try:
         q = tencent_quotes("sh000001,sz399001,sz399006,sz399106")
         sh, sz, cyb, szc = q.get("sh000001"), q.get("sz399001"), q.get("sz399006"), q.get("sz399106")
+        if _akq:
+            sh = _akq.get("000001") or sh
+            sz = _akq.get("399001") or sz
+            cyb = _akq.get("399006") or cyb
         data["indices"] = {"上证指数": sh, "深证成指": sz, "创业板指": cyb}
         if sh and sz and sh.get("amount_yuan") and sz.get("amount_yuan"):
             _total = sh["amount_yuan"] + sz["amount_yuan"]
@@ -507,7 +570,17 @@ def collect():
                     data["大盘资金与涨跌家数"] = em_market_overview()
                 data["status"][k] = "ok(60s补采成功)"
             except Exception as e:
-                data["status"][k] = "失败(60s补采后仍失败: %s)" % str(e)[:60]
+                # 第三层兜底：AkShare 板块源
+                if k == "板块数据" and AK_OK:
+                    try:
+                        _ab = ak_boards()
+                        data["行业板块领涨"] = _ab["行业板块领涨"]
+                        data["行业板块领跌"] = _ab["行业板块领跌"]
+                        data["status"][k] = "ok(akshare兜底)"
+                    except Exception as e2:
+                        data["status"][k] = "失败(补采+akshare均失败: %s|%s)" % (str(e)[:40], str(e2)[:40])
+                else:
+                    data["status"][k] = "失败(60s补采后仍失败: %s)" % str(e)[:60]
         if _shares_missing:
             for row in data.get("国家队宽基ETF", []):
                 if row.get("fund_total_shares"):
@@ -557,8 +630,18 @@ def collect():
         status("铝个股", True)
     except Exception as e:
         status("铝个股", False, str(e)[:80])
-    # 库存/仓单：公开接口不稳定，直接交由新闻检索补齐；未命中则生成环节写"未查到"
-    data["库存数据接口"] = "无稳定的公开日度库存接口，库存信息通过下方新闻条目提供"
+    # 库存/仓单：AkShare 官方数据（上期所仓单 + LME 库存报告），新闻检索兜底
+    if AK_OK:
+        try:
+            _inv = ak_inventory()
+            data["库存数据"] = _inv
+            _got = [k for k in _inv if not k.endswith("_错误")]
+            status("库存(akshare)", bool(_got), "" if _got else "两源皆空")
+        except Exception as e:
+            data["库存数据"] = {"错误": str(e)[:80]}
+            status("库存(akshare)", False, str(e)[:60])
+    else:
+        data["库存数据接口"] = "AkShare 未安装，库存信息通过新闻条目提供"
 
     # 7) 新闻与公告（带原文链接）
     news = {}
