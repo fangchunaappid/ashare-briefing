@@ -287,6 +287,44 @@ def sina_shfe_aluminum_fallback():
             "open_interest": to_num(p[13]), "quote_date": p[17]}
 
 
+def cninfo_announcements(searchkey, days=3, n=8):
+    """巨潮资讯网官方公告检索（证监会指定信息披露平台）。
+    返回 [{title, sec_name, date, url}]，url 为官方 PDF 原文链接。"""
+    from datetime import timedelta
+    end = datetime.now(TZ).strftime("%Y-%m-%d")
+    start = (datetime.now(TZ) - timedelta(days=days)).strftime("%Y-%m-%d")
+    out = []
+    for column in ("sse", "szse"):  # 沪/深两市分开查
+        body = ("pageNum=1&pageSize=%d&column=%s&tabName=fulltext"
+                "&searchkey=%s&seDate=%s~%s" % (n, column, urllib.parse.quote(searchkey), start, end))
+        req = urllib.request.Request("http://www.cninfo.com.cn/new/hisAnnouncement/query",
+                                     data=body.encode("utf-8"), headers={
+                                         "User-Agent": HEADERS["User-Agent"],
+                                         "Content-Type": "application/x-www-form-urlencoded",
+                                         "X-Requested-With": "XMLHttpRequest"}, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                j = json.loads(resp.read().decode("utf-8", "replace"))
+        except Exception:
+            continue
+        for a in j.get("announcements") or []:
+            title = re.sub(r"</?em>", "", a.get("announcementTitle") or "").strip()
+            adjunct = a.get("adjunctUrl") or ""
+            out.append({
+                "title": title,
+                "sec_name": (a.get("secName") or "").strip(),
+                "date": datetime.fromtimestamp((a.get("announcementTime") or 0) / 1000, TZ).strftime("%Y-%m-%d"),
+                "url": ("http://static.cninfo.com.cn/" + adjunct) if adjunct else None,
+                "source": "巨潮资讯",
+            })
+    # 去重按标题
+    seen, uniq = set(), []
+    for it in out:
+        if it["title"] not in seen:
+            seen.add(it["title"])
+            uniq.append(it)
+    return uniq[:n]
+
 def sina_7x24(n=30):
     url = ("https://zhibo.sina.com.cn/api/zhibo/feed?page=1&page_size=%d"
            "&zhibo_id=152&tag_id=0" % n)
@@ -557,6 +595,19 @@ def collect():
     except Exception as e:
         news["东方财富公告"] = []
         status("公告", False, str(e)[:60])
+    # 巨潮资讯官方公告（证监会指定信披平台，国家队动向的权威依据）
+    try:
+        news["官方公告-汇金增持"] = cninfo_announcements("汇金")
+        status("公告-汇金(巨潮)", bool(news["官方公告-汇金增持"]))
+    except Exception as e:
+        news["官方公告-汇金增持"] = []
+        status("公告-汇金(巨潮)", False, str(e)[:60])
+    try:
+        news["官方公告-份额变动"] = cninfo_announcements("基金份额变动")
+        status("公告-份额变动(巨潮)", bool(news["官方公告-份额变动"]))
+    except Exception as e:
+        news["官方公告-份额变动"] = []
+        status("公告-份额变动(巨潮)", False, str(e)[:60])
     data["news"] = news
 
     if data.get("国家队宽基ETF"):
